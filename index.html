@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Appel AS · Yves du Manoir</title>
+  <meta name="theme-color" content="#13233F">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='%2313233F'/><rect x='96' y='146' width='320' height='220' rx='10' fill='none' stroke='%23fff' stroke-width='18'/><line x1='256' y1='146' x2='256' y2='366' stroke='%23D7263D' stroke-width='18'/><circle cx='256' cy='256' r='52' fill='none' stroke='%23E0A100' stroke-width='18'/></svg>
+" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="data:image/png;base64,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">
+  <meta name="apple-mobile-web-app-title" content="Appel AS">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+/* Appel AS — palette tirée d'un gymnase : sol bleu nuit, lignes de terrain colorées */
+:root {
+  --fond: #E9EEF2;
+  --surface: #FFFFFF;
+  --encre: #13233F;
+  --gris: #5A6A80;
+  --trait: #D3DBE4;
+  --bleu: #1B6CA8;
+  --P: #1F8A4C;
+  --A: #C8323C;
+  --R: #C47F00;
+  --E: #6A5AA8;
+  --titre: 'Barlow Condensed', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --texte: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --rayon: 10px;
+  --tab: 64px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 16px/1.45 var(--texte);
+  padding-bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 16px);
+}
+a { color: var(--bleu); }
+h1, h2 { font-family: var(--titre); font-weight: 700; line-height: 1.1; margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--bleu); outline-offset: 2px; }
+
+/* ---------- Barre haute & onglets ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) 16px 10px;
+  background: var(--encre); color: #fff;
+}
+.marque { color: #fff; text-decoration: none; font: 700 1.25rem/1 var(--titre); letter-spacing: .02em; }
+.user { background: rgba(255,255,255,.12); border: 0; color: #fff; border-radius: 999px; padding: 6px 12px; font-size: .9rem; cursor: pointer; }
+body:not(.connecte) .user, body:not(.connecte) .tabbar { display: none; }
+
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  height: calc(var(--tab) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--surface); border-top: 1px solid var(--trait);
+}
+.tabbar a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  text-decoration: none; color: var(--gris); font-size: .78rem;
+}
+.tabbar svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar a.actif { color: var(--encre); font-weight: 700; box-shadow: inset 0 3px 0 var(--encre); }
+
+main { max-width: 760px; margin: 0 auto; padding: 16px; }
+.titre { font-size: 2rem; margin-bottom: 12px; }
+.sous-titre { font-size: 1.4rem; margin: 28px 0 10px; }
+.petit { font-size: .85rem; color: var(--gris); }
+.gros { font-size: 1.1rem; font-weight: 700; margin: 4px 0; }
+.vide { color: var(--gris); padding: 24px 0; text-align: center; list-style: none; }
+.note { color: var(--R); font-size: .85rem; font-weight: 700; }
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 8px 16px; border-radius: var(--rayon);
+  border: 1.5px solid var(--encre); background: var(--surface); color: var(--encre);
+  font-weight: 700; text-decoration: none; cursor: pointer; white-space: nowrap;
+}
+.btn.primaire { background: var(--encre); color: #fff; }
+.btn.grand { min-height: 54px; font-size: 1.05rem; padding: 12px 22px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.lien { background: none; border: 0; padding: 0; color: var(--bleu); text-decoration: underline; cursor: pointer; }
+.boutons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+input[type=search], input[type=date], select, textarea {
+  min-height: 44px; padding: 8px 12px; border: 1.5px solid var(--trait);
+  border-radius: var(--rayon); background: var(--surface); width: 100%;
+}
+textarea { resize: vertical; margin-bottom: 8px; }
+
+/* ---------- Connexion ---------- */
+.login { text-align: center; padding: 48px 8px; max-width: 420px; margin: 0 auto; }
+.login h1 { font-size: 2.8rem; margin-top: 24px; }
+.login-sous { color: var(--gris); margin: 6px 0 32px; }
+.login .petit { margin-top: 20px; }
+/* Rond central d'un terrain, en lignes de couleur */
+.login-terrain { width: 160px; height: 100px; margin: 0 auto; border: 3px solid var(--encre); border-radius: 6px; position: relative; }
+.login-terrain::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 3px solid #D7263D; }
+.login-terrain span { position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); border: 3px solid #E0A100; border-radius: 50%; }
+
+.vide-etat { text-align: center; padding: 48px 8px; }
+.vide-etat h1 { font-size: 2rem; margin-bottom: 8px; }
+.vide-etat p { color: var(--gris); margin-bottom: 20px; }
+
+/* ---------- Appel ---------- */
+.ligne-date { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 12px; }
+.ligne-date label { font-weight: 700; }
+.ligne-date input { width: auto; }
+
+.puces { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 10px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; scrollbar-width: none; }
+.puces::-webkit-scrollbar { display: none; }
+.puces button {
+  flex: 0 0 auto; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1.5px solid var(--trait); border-left: 6px solid var(--c);
+  border-radius: 8px; padding: 6px 12px; min-height: 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.puces button[aria-selected=true] { background: var(--encre); color: #fff; border-color: var(--encre); border-left-color: var(--c); }
+.p-nom { font-weight: 700; font-size: .92rem; }
+.p-h { font-size: .8rem; opacity: .8; }
+
+/* L'en-tête de section façon tableau de marque, souligné de la couleur de sa ligne de terrain */
+.entete-sec {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
+  padding: 10px 0 12px; margin-bottom: 12px; border-bottom: 5px solid var(--c);
+}
+.entete-sec h1 { font-size: 2.3rem; }
+.entete-sec p { margin: 2px 0 0; color: var(--gris); }
+.score { font-family: var(--titre); font-weight: 700; line-height: .9; text-align: right; white-space: nowrap; }
+.score b { font-size: 3.4rem; }
+.score span { font-size: 1.6rem; color: var(--gris); }
+
+.outils { display: flex; gap: 8px; margin-bottom: 6px; }
+.outils input { flex: 1; }
+.legende { font-size: .8rem; color: var(--gris); margin: 4px 0 10px; }
+
+.liste-appel, .liste-eleves, .liste-jours, .liste-sections, .contacts, .creneaux, .histo-eleve, .jour-liste { list-style: none; margin: 0; padding: 0; }
+
+.eleve-appel {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border-radius: var(--rayon); padding: 8px; margin-bottom: 6px;
+  border-left: 5px solid transparent; transition: border-color .15s;
+}
+.eleve-appel.etat-P { border-left-color: var(--P); }
+.eleve-appel.etat-A { border-left-color: var(--A); background: #FCF1F2; }
+.eleve-appel.etat-R { border-left-color: var(--R); }
+.eleve-appel.etat-E { border-left-color: var(--E); }
+.qui { flex: 1; min-width: 0; display: grid; grid-template-columns: 44px 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center; text-decoration: none; color: inherit; }
+.qui .av { grid-row: span 2; }
+.qui .noms { white-space: normal; overflow-wrap: anywhere; line-height: 1.2; }
+.qui .nom, .qui .prenom { display: block; }
+.qui .meta { margin-top: 3px; }
+.noms { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nom { font-weight: 700; }
+.meta { font-size: .82rem; color: var(--gris); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.hre { font-weight: 700; color: var(--R); }
+
+.av { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.av-vide { background: var(--fond); color: var(--gris); font-weight: 700; font-size: .9rem; }
+
+.marques { display: flex; gap: 4px; flex: 0 0 auto; }
+.m {
+  width: 38px; height: 44px; border-radius: 8px; cursor: pointer;
+  border: 1.5px solid var(--trait); background: var(--surface); color: var(--gris);
+  font: 700 1.05rem/1 var(--titre);
+}
+.m-P[aria-pressed=true] { background: var(--P); border-color: var(--P); color: #fff; }
+.m-A[aria-pressed=true] { background: var(--A); border-color: var(--A); color: #fff; }
+.m-R[aria-pressed=true] { background: var(--R); border-color: var(--R); color: #fff; }
+.m-E[aria-pressed=true] { background: var(--E); border-color: var(--E); color: #fff; }
+
+.dep { font-size: .74rem; font-weight: 700; padding: 1px 7px; border-radius: 999px; }
+.dep.seul { background: #E3F2E9; color: var(--P); }
+.dep.recup { background: #FFF1D6; color: #8A5A00; }
+.dep.ajoute { background: #E7ECF7; color: var(--bleu); }
+.dep.alerte { background: #FBE3E5; color: var(--A); }
+
+.ajout { margin: 14px 0; }
+.ajout summary { cursor: pointer; color: var(--bleu); font-size: .92rem; }
+.ajout-corps { display: flex; gap: 8px; margin-top: 8px; }
+.ajout-corps select { flex: 1; min-width: 0; }
+
+.barre-bilan {
+  position: sticky; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 8px);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--surface); border: 1.5px solid var(--trait); border-radius: var(--rayon);
+  padding: 8px 8px 8px 12px; box-shadow: 0 4px 14px rgba(19,35,63,.12);
+}
+.compteurs { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: .85rem; font-weight: 700; }
+.k-P { color: var(--P); } .k-A { color: var(--A); } .k-R { color: var(--R); } .k-E { color: var(--E); } .k-non { color: var(--gris); }
+
+/* ---------- Élèves ---------- */
+.filtres { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; margin-bottom: 8px; }
+.filtres input { grid-column: 1 / -1; }
+.compte { font-size: .85rem; color: var(--gris); margin: 4px 0 8px; }
+.carte-eleve { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border-radius: var(--rayon); padding: 10px; margin-bottom: 6px; text-decoration: none; color: inherit; }
+.ce-txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.sec-pastilles { display: flex; flex-wrap: wrap; gap: 4px; }
+.sec-pastilles span { font-size: .75rem; padding: 1px 8px 1px 6px; border-left: 4px solid var(--c); background: var(--fond); border-radius: 3px; }
+
+/* ---------- Fiche ---------- */
+.retour { display: inline-block; margin-bottom: 10px; text-decoration: none; font-weight: 700; }
+.fiche-tete { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+.fiche-tete h1 { font-size: 2rem; }
+.fiche-tete .meta { font-size: .92rem; margin: 4px 0 0; }
+.photo { position: relative; flex: 0 0 auto; width: 118px; cursor: pointer; text-align: center; }
+.photo-img { width: 118px; height: 148px; border-radius: var(--rayon); object-fit: cover; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.photo .av-vide { border: 2px dashed var(--trait); }
+.photo-action { display: block; font-size: .8rem; color: var(--bleu); margin-top: 4px; font-weight: 700; }
+
+.bloc { background: var(--surface); border-radius: var(--rayon); padding: 14px; margin-bottom: 10px; }
+.bloc h2 { font-size: 1.3rem; margin-bottom: 8px; }
+.bloc p { margin: 4px 0; }
+.depart { border-left: 6px solid var(--P); }
+.depart.attention { border-left-color: var(--R); background: #FFF8EA; }
+
+.creneaux li { border-left: 5px solid var(--c); padding: 4px 0 4px 10px; margin-bottom: 6px; }
+.alerte-txt { color: var(--A); font-weight: 700; }
+.contacts li { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--fond); flex-wrap: wrap; }
+.contacts li > span:first-child { width: 56px; color: var(--gris); font-size: .85rem; }
+.contacts .tel { font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+
+.histo-eleve li, .jour-liste li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--fond); font-size: .92rem; }
+.histo-eleve li > span:first-child { width: 56px; color: var(--gris); }
+.h-sec { flex: 1; border-left: 4px solid var(--c); padding-left: 8px; }
+.jour-liste li a { flex: 1; color: inherit; text-decoration: none; font-weight: 700; }
+.st { font-weight: 700; font-size: .85rem; }
+.st-P { color: var(--P); } .st-A { color: var(--A); } .st-R { color: var(--R); } .st-E { color: var(--E); } .st-non { color: var(--gris); }
+
+/* ---------- Historique ---------- */
+.jour { display: block; background: var(--surface); border-radius: var(--rayon); padding: 12px; margin-bottom: 8px; text-decoration: none; color: inherit; }
+.j-date { display: block; font: 700 1.3rem/1.1 var(--titre); margin-bottom: 6px; }
+.j-date::first-letter { text-transform: uppercase; }
+.j-secs { display: flex; flex-direction: column; gap: 3px; font-size: .88rem; }
+.j-secs span { border-left: 4px solid var(--c); padding-left: 8px; }
+.envoye { display: block; margin-top: 6px; color: var(--P); }
+.jour-sec { border-top: 5px solid var(--c); }
+.apercu { white-space: pre-wrap; font: .82rem/1.45 var(--texte); background: var(--fond); padding: 10px; border-radius: 8px; max-height: 360px; overflow: auto; }
+.envoi details { margin-top: 12px; }
+.titre::first-letter { text-transform: uppercase; }
+
+/* ---------- Import ---------- */
+.etapes { padding-left: 20px; margin: 0 0 16px; }
+.etapes li { margin-bottom: 6px; }
+.fichier { width: 100%; }
+.apercu-import { margin-top: 14px; }
+.apercu-import h2 { font: 700 .95rem/1.3 var(--texte); overflow-wrap: anywhere; color: var(--gris); }
+.apercu-import ul { margin: 6px 0; padding-left: 20px; font-size: .9rem; }
+.apercu-import details { margin: 8px 0; }
+.apercu-import summary { cursor: pointer; font-weight: 700; }
+.absents { background: #FFF8EA; border-radius: 8px; padding: 10px; margin: 10px 0; font-size: .92rem; }
+.absents label { display: flex; gap: 8px; align-items: flex-start; font-weight: 700; margin-top: 6px; }
+.succes { background: #E3F2E9; color: var(--P); font-weight: 700; padding: 12px; border-radius: var(--rayon); }
+.liste-sections li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--surface); border-left: 6px solid var(--c); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 80px);
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  background: var(--encre); color: #fff; padding: 10px 16px; border-radius: var(--rayon);
+  max-width: calc(100% - 32px); font-size: .92rem; transition: opacity .2s, transform .2s; z-index: 20;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.err { background: var(--A); }
+
+@media (max-width: 380px) {
+  .m { width: 33px; }
+  .qui { grid-template-columns: 36px 1fr; column-gap: 8px; }
+  .qui .av { width: 36px; height: 36px; }
+  .entete-sec h1 { font-size: 1.9rem; }
+  .score b { font-size: 2.8rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="marque" href="#appel">AS Yves du Manoir</a>
+    <button id="userBtn" class="user" type="button" aria-label="Compte et déconnexion"></button>
+  </header>
+
+  <main id="view"><p class="vide">Chargement…</p></main>
+
+  <nav class="tabbar" aria-label="Navigation">
+    <a href="#appel" data-tab="appel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Appel</a>
+    <a href="#eleves" data-tab="eleves">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M17 11a3 3 0 1 0 0-6M22 20c0-3-2-5-5-5"/></svg>Élèves</a>
+    <a href="#historique" data-tab="historique">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Historique</a>
+    <a href="#import" data-tab="import">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg>Import</a>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
+  onAuthStateChanged, signOut,
+} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {
+  initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
+  collection, doc, onSnapshot, setDoc, writeBatch, getDoc, deleteDoc,
+  serverTimestamp, deleteField, arrayUnion,
+} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+
+// =====================================================================
+// ⚠️ À COMPLÉTER : collez ici le bloc firebaseConfig donné par Firebase
+// (Paramètres du projet > Vos applications > Config).
+// Ces valeurs ne sont pas secrètes : la sécurité repose sur les règles Firestore.
+// =====================================================================
+const firebaseConfig = {
+  apiKey: 'A_REMPLACER',
+  authDomain: 'gestionas.firebaseapp.com',
+  projectId: 'gestionas',
+  storageBucket: 'VOTRE-PROJET.appspot.com',
+  messagingSenderId: 'A_REMPLACER',
+  appId: 'A_REMPLACER',
+};
+
+// Comptes Google autorisés (garder la même liste dans firestore.rules)
+const UTILISATEURS = [
+  { email: 'florianeude@gmail.com', nom: 'Florian' },
+  { email: 'cosperecemeric@gmail.com', nom: 'Emeric' },
+  // { email: 'adresse.de.camille@gmail.com', nom: 'Camille' }, // à activer plus tard
+];
+
+const EMAIL_CPE = 'jean-richard.deston@ac-versailles.fr';
+const ETABLISSEMENT = 'Association sportive du collège Yves du Manoir, Vaucresson';
+
+// ---------- Lecture de l'export HelloAsso ----------
+const { parseRows } = (() => {
+// Lecture de l'export HelloAsso (xlsx/csv) -> élèves + sections.
+// Module "pur" : aucune dépendance à Firebase, testable seul.
+
+const norm = (s) =>
+  String(s ?? '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/\s+/g, ' ').trim();
+
+const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+const pad = (n) => String(n).padStart(2, '0');
+
+// Excel stocke parfois les numéros comme des nombres : le 0 initial disparaît.
+function formatPhone(v) {
+  if (v == null || v === '') return '';
+  let d = String(v).replace(/\D/g, '');
+  if (d.startsWith('0033')) d = '0' + d.slice(4);
+  else if (d.length === 11 && d.startsWith('33')) d = '0' + d.slice(2);
+  if (d.length === 9) d = '0' + d;
+  if (d.length === 10) return d.replace(/(\d{2})(?=\d)/g, '$1 ');
+  return String(v).trim();
+}
+
+const formatNom = (s) => String(s ?? '').trim().replace(/\s+/g, ' ').toUpperCase();
+
+const formatPrenom = (s) =>
+  String(s ?? '').trim().replace(/\s+/g, ' ').toLowerCase()
+    .replace(/(^|[\s\-'])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+
+const oui = (v) => norm(v) === 'oui';
+
+// Date Excel (numéro de série), Date JS ou texte jj/mm/aaaa -> "aaaa-mm-jj"
+function toISODate(v, withTime = false) {
+  if (v == null || v === '') return '';
+  let d = null;
+  if (typeof v === 'number') {
+    d = new Date(Math.round((v - 25569) * 86400000));
+    const date = `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+    return withTime ? `${date}T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}` : date;
+  }
+  if (v instanceof Date) {
+    const date = `${v.getFullYear()}-${pad(v.getMonth() + 1)}-${pad(v.getDate())}`;
+    return withTime ? `${date}T${pad(v.getHours())}:${pad(v.getMinutes())}` : date;
+  }
+  const m = String(v).match(/(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})(?:\D+(\d{1,2}):(\d{2}))?/);
+  if (m) {
+    const date = `${m[3]}-${pad(m[2])}-${pad(m[1])}`;
+    return withTime && m[4] ? `${date}T${pad(m[4])}:${m[5]}` : date;
+  }
+  const iso = String(v).match(/\d{4}-\d{2}-\d{2}/);
+  return iso ? iso[0] : '';
+}
+
+// Colonnes reconnues par le début de leur intitulé (accents et casse ignorés)
+const CHAMPS = [
+  ['ref', 'reference commande'],
+  ['dateCommande', 'date de la commande'],
+  ['statut', 'statut de la commande'],
+  ['nom', 'nom adherent'],
+  ['prenom', 'prenom adherent'],
+  ['nomPayeur', 'nom payeur'],
+  ['prenomPayeur', 'prenom payeur'],
+  ['emailPayeur', 'email payeur'],
+  ['dateNaissance', 'date de naissance'],
+  ['classe', 'classe'],
+  ['telPere', 'telephone pere'],
+  ['telMere', 'telephone mere'],
+  ['emailParents', 'mail parents'],
+  ['competition', 'participation competition'],
+  ['commentaire', 'commentaire'],
+];
+
+// "Futsal compétition / mercredi de 12h30 à 13h30 Inscription après accord..."
+function parseSectionHeader(h) {
+  const raw = String(h).replace(/\s+/g, ' ').trim();
+  const parts = raw.split(' / ');
+  let first = parts[0];
+  let rest = parts.slice(1).join(' / ');
+  if (parts.length === 1) {
+    const i = norm(raw).indexOf('mercredi');
+    first = i > 0 ? raw.slice(0, i) : raw;
+    rest = i > 0 ? raw.slice(i) : '';
+  }
+  const re = /(\d{1,2})\s*h\s*(\d{2})?\s*(?:à|a|-|–|—)\s*(\d{1,2})\s*h\s*(\d{2})?/i;
+  const m = raw.match(re);
+  const debut = m ? `${pad(m[1])}:${m[2] || '00'}` : '';
+  const fin = m ? `${pad(m[3])}:${m[4] || '00'}` : '';
+  const parens = [...first.matchAll(/\(([^)]*)\)/g)].map((x) => x[1].trim());
+  const nom = first.replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').replace(/[\s,/-]+$/, '').trim();
+  let apres = rest;
+  const mr = rest.match(re);
+  if (mr) apres = rest.slice(rest.indexOf(mr[0]) + mr[0].length);
+  apres = apres.trim().replace(/^[\s,.:-]+/, '').replace(/^\((.*)\)$/, '$1').trim();
+  const detail = [...parens, apres].filter(Boolean).join(' · ');
+  return { id: slug(nom), nom, debut, fin, detail, colonne: raw };
+}
+
+/**
+ * rows : tableau de lignes (la 1re = en-têtes), ex. XLSX.utils.sheet_to_json(ws, {header:1, raw:true})
+ * Retourne { eleves, sections, ignores, colonnesManquantes }
+ */
+function parseRows(rows) {
+  const lignes = rows.filter((r) => r && r.some((c) => c !== null && c !== ''));
+  if (!lignes.length) throw new Error('Le fichier est vide.');
+  const headers = lignes[0].map((h) => String(h ?? ''));
+  const col = {};
+  const sectionsCols = [];
+
+  headers.forEach((h, i) => {
+    const n = norm(h);
+    if (!n) return;
+    if (n.includes('rejoindre son domicile') || n.includes('rentrer seul')) {
+      if (col.rentreSeul == null) col.rentreSeul = i;
+      return;
+    }
+    const champ = CHAMPS.find(([k, key]) => col[k] == null && n.startsWith(key));
+    if (champ) { col[champ[0]] = i; return; }
+    if (n.includes('mercredi')) sectionsCols.push({ i, ...parseSectionHeader(h) });
+  });
+
+  const colonnesManquantes = ['nom', 'prenom'].filter((k) => col[k] == null);
+  if (colonnesManquantes.length) {
+    throw new Error("Colonnes « Nom adhérent » / « Prénom adhérent » introuvables : est-ce bien l'export HelloAsso ?");
+  }
+
+  const get = (r, k) => (col[k] == null ? null : r[col[k]]);
+  const ignores = [];
+  const parId = new Map();
+
+  lignes.slice(1).forEach((r, idx) => {
+    const ligne = idx + 2;
+    const nom = formatNom(get(r, 'nom'));
+    const prenom = formatPrenom(get(r, 'prenom'));
+    if (!nom || !prenom) { ignores.push({ ligne, raison: 'Nom ou prénom vide' }); return; }
+    const statut = String(get(r, 'statut') ?? '').trim();
+    if (statut && norm(statut) !== 'valide') {
+      ignores.push({ ligne, raison: `Commande « ${statut} » (${nom} ${prenom})` });
+      return;
+    }
+    const dateNaissance = toISODate(get(r, 'dateNaissance'));
+    const id = [slug(nom), slug(prenom), dateNaissance.replace(/-/g, '')].filter(Boolean).join('-');
+    const payeur = [formatPrenom(get(r, 'prenomPayeur')), formatNom(get(r, 'nomPayeur'))].filter(Boolean).join(' ');
+    const eleve = {
+      id,
+      nom,
+      prenom,
+      classe: String(get(r, 'classe') ?? '').trim().toUpperCase(),
+      dateNaissance,
+      telPere: formatPhone(get(r, 'telPere')),
+      telMere: formatPhone(get(r, 'telMere')),
+      emailParents: String(get(r, 'emailParents') ?? '').trim().toLowerCase(),
+      emailPayeur: String(get(r, 'emailPayeur') ?? '').trim().toLowerCase(),
+      payeur,
+      competition: oui(get(r, 'competition')),
+      rentreSeul: oui(get(r, 'rentreSeul')),
+      sections: sectionsCols.filter((s) => oui(r[s.i])).map((s) => s.id),
+      refCommande: String(get(r, 'ref') ?? ''),
+      dateInscription: toISODate(get(r, 'dateCommande'), true),
+      commentaire: String(get(r, 'commentaire') ?? '').trim(),
+    };
+    // Si un élève apparaît deux fois, la commande la plus récente l'emporte
+    const prev = parId.get(id);
+    if (!prev || (eleve.dateInscription || '') >= (prev.dateInscription || '')) parId.set(id, eleve);
+  });
+
+  const sections = sectionsCols
+    .map(({ i, ...s }) => s)
+    .sort((a, b) => (a.debut || '99').localeCompare(b.debut || '99') || a.nom.localeCompare(b.nom));
+
+  return { eleves: [...parId.values()], sections, ignores, colonnesManquantes };
+}
+
+return { parseRows };
+})();
+
+/* ---------- Firebase ---------- */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+// Cache local : l'appel fonctionne même avec un mauvais réseau au gymnase,
+// les données se synchronisent quand la connexion revient.
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+});
+
+/* ---------- Utilitaires ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = (n) => String(n).padStart(2, '0');
+function todayISO() { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+const maintenant = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const pl = (n, mot) => `${n} ${mot}${n > 1 ? 's' : ''}`;
+const h = (t) => (t ? t.replace(':', 'h') : '');
+const dateLongue = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const dateCourte = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+const estMercredi = (iso) => new Date(iso + 'T12:00:00').getDay() === 3;
+const telHref = (t) => 'tel:' + String(t).replace(/\s/g, '');
+const smsHref = (t) => 'sms:' + String(t).replace(/\s/g, '');
+function age(iso) {
+  if (!iso) return '';
+  const n = new Date(iso + 'T12:00:00'), d = new Date();
+  let a = d.getFullYear() - n.getFullYear();
+  if (d.getMonth() < n.getMonth() || (d.getMonth() === n.getMonth() && d.getDate() < n.getDate())) a--;
+  return a;
+}
+const moi = () => UTILISATEURS.find((u) => u.email.toLowerCase() === (S.user?.email || '').toLowerCase());
+const autorise = (u) => !!u && UTILISATEURS.some((x) => x.email.toLowerCase() === (u.email || '').toLowerCase());
+
+function toast(msg, type = '') {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => (t.className = 'toast'), 2600);
+}
+
+function telecharger(nom, contenu, type = 'text/csv;charset=utf-8') {
+  const blob = new Blob([contenu], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = nom;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+const csv = (lignes) => '\uFEFF' + lignes.map((l) => l.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(';')).join('\r\n');
+
+/* ---------- État ---------- */
+const S = {
+  user: null,
+  eleves: new Map(),
+  sections: [],
+  appels: new Map(),
+  bilans: new Map(),
+  meta: {},
+  pret: false,
+  date: todayISO(),
+  sectionSel: null,
+};
+let desabonnements = [];
+let vue = null;
+
+/* ---------- Modèle ---------- */
+const STATUTS = {
+  P: { label: 'Présent', court: 'P' },
+  A: { label: 'Absent', court: 'A' },
+  R: { label: 'En retard', court: 'R' },
+  E: { label: 'Excusé', court: 'E' },
+};
+const PALETTE = ['#D7263D', '#1B6CA8', '#E0A100', '#2A9D5C', '#7B4BB7', '#E4572E', '#0E9AA7', '#8C6D46'];
+
+const section = (id) => S.sections.find((s) => s.id === id);
+const elevesActifs = () => [...S.eleves.values()].filter((e) => e.actif !== false);
+const trier = (a, b) => a.nom.localeCompare(b.nom, 'fr') || a.prenom.localeCompare(b.prenom, 'fr');
+const membres = (secId) => elevesActifs().filter((e) => (e.sections || []).includes(secId)).sort(trier);
+const appelId = (date, secId) => `${date}_${secId}`;
+
+function listeAppel(date, secId) {
+  const ap = S.appels.get(appelId(date, secId));
+  const ids = new Set(membres(secId).map((e) => e.id));
+  Object.keys(ap?.presences || {}).forEach((id) => ids.add(id));
+  return [...ids].map((id) => S.eleves.get(id)).filter(Boolean).sort(trier);
+}
+
+function sectionsDe(e) {
+  return (e.sections || []).map(section).filter(Boolean).sort((a, b) => (a.debut || '').localeCompare(b.debut || ''));
+}
+
+function depart(e) {
+  const fin = sectionsDe(e).map((s) => s.fin).filter(Boolean).sort().pop() || '';
+  return { fin, seul: !!e.rentreSeul };
+}
+
+function conflits(e) {
+  const secs = sectionsDe(e);
+  const res = [];
+  for (let i = 0; i < secs.length; i++)
+    for (let j = i + 1; j < secs.length; j++)
+      if (secs[i].debut && secs[j].debut && secs[i].debut < secs[j].fin && secs[j].debut < secs[i].fin) res.push([secs[i], secs[j]]);
+  return res;
+}
+
+function compter(date, secId) {
+  const ap = S.appels.get(appelId(date, secId));
+  const liste = listeAppel(date, secId);
+  const c = { P: 0, A: 0, R: 0, E: 0, non: 0, total: liste.length };
+  liste.forEach((e) => { const st = ap?.presences?.[e.id]; if (st && c[st] != null) c[st]++; else c.non++; });
+  return c;
+}
+
+const initiales = (e) => (e.prenom?.[0] || '') + (e.nom?.[0] || '');
+const avatar = (e, cls = 'av') =>
+  e.photoThumb
+    ? `<img class="${cls}" src="${e.photoThumb}" alt="">`
+    : `<span class="${cls} av-vide" aria-hidden="true">${esc(initiales(e))}</span>`;
+
+const puceDepart = (e) =>
+  e.rentreSeul
+    ? `<span class="dep seul">Rentre seul</span>`
+    : `<span class="dep recup">À récupérer</span>`;
+
+/* ---------- Authentification ---------- */
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+
+async function connexion() {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (e) {
+    if (['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment', 'auth/cancelled-popup-request'].includes(e.code)) {
+      await signInWithRedirect(auth, provider);
+    } else if (e.code !== 'auth/popup-closed-by-user') {
+      toast('Connexion impossible : ' + (e.code || e.message), 'err');
+    }
+  }
+}
+
+getRedirectResult(auth).catch((e) => toast('Connexion impossible : ' + (e.code || e.message), 'err'));
+
+onAuthStateChanged(auth, (u) => {
+  desabonnements.forEach((f) => f());
+  desabonnements = [];
+  S.user = u;
+  if (!u) return ecranConnexion();
+  if (!autorise(u)) return ecranRefus(u);
+  document.body.classList.add('connecte');
+  $('#userBtn').textContent = moi()?.nom || u.displayName || u.email;
+  ecouter();
+  route();
+});
+
+function ecranConnexion() {
+  document.body.classList.remove('connecte');
+  $('#view').innerHTML = `
+    <section class="login">
+      <div class="login-terrain" aria-hidden="true"><span></span></div>
+      <h1>Appel de l'AS</h1>
+      <p class="login-sous">Collège Yves du Manoir · Vaucresson</p>
+      <button id="btnLogin" class="btn primaire grand">Se connecter avec Google</button>
+      <p class="petit">Accès réservé aux enseignants de l'association sportive.</p>
+    </section>`;
+  $('#btnLogin').onclick = connexion;
+}
+
+function ecranRefus(u) {
+  document.body.classList.remove('connecte');
+  $('#view').innerHTML = `
+    <section class="login">
+      <h1>Accès refusé</h1>
+      <p>Le compte <b>${esc(u.email)}</b> n'est pas autorisé. Connectez-vous avec le compte Gmail enregistré pour l'AS.</p>
+      <button id="btnOut" class="btn primaire grand">Changer de compte</button>
+    </section>`;
+  $('#btnOut').onclick = () => signOut(auth);
+}
+
+$('#userBtn').onclick = () => {
+  if (confirm(`Se déconnecter (${S.user?.email}) ?`)) signOut(auth);
+};
+
+/* ---------- Données temps réel ---------- */
+function erreurDonnees(e) {
+  console.error(e);
+  toast(e.code === 'permission-denied' ? 'Accès aux données refusé : vérifiez les règles Firestore.' : 'Erreur de synchronisation : ' + e.message, 'err');
+}
+
+function ecouter() {
+  const recu = { eleves: false, sections: false, appels: false };
+  const fini = (k) => { recu[k] = true; S.pret = Object.values(recu).every(Boolean); rafraichir(); };
+  desabonnements.push(
+    onSnapshot(collection(db, 'eleves'), (snap) => {
+      S.eleves = new Map(snap.docs.map((d) => [d.id, { id: d.id, ...d.data() }]));
+      fini('eleves');
+    }, erreurDonnees),
+    onSnapshot(collection(db, 'sections'), (snap) => {
+      S.sections = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (a.debut || '99').localeCompare(b.debut || '99') || a.nom.localeCompare(b.nom));
+      fini('sections');
+    }, erreurDonnees),
+    onSnapshot(collection(db, 'appels'), (snap) => {
+      S.appels = new Map(snap.docs.map((d) => [d.id, { id: d.id, ...d.data() }]));
+      fini('appels');
+    }, erreurDonnees),
+    onSnapshot(collection(db, 'bilans'), (snap) => {
+      S.bilans = new Map(snap.docs.map((d) => [d.id, d.data()]));
+      rafraichir();
+    }, erreurDonnees),
+    onSnapshot(doc(db, 'config', 'meta'), (d) => { S.meta = d.data() || {}; rafraichir(); }, erreurDonnees),
+  );
+}
+
+/* ---------- Routeur ---------- */
+const ROUTES = { appel: vueAppel, eleves: vueEleves, eleve: vueFiche, historique: vueHistorique, jour: vueJour, import: vueImport };
+
+function route() {
+  if (!autorise(S.user)) return;
+  const [nom, param] = (location.hash.slice(1) || 'appel').split('/');
+  const f = ROUTES[nom] || vueAppel;
+  vue = f(decodeURIComponent(param || ''));
+  vue.render($('#view'));
+  const onglet = { eleve: 'eleves', jour: 'historique' }[nom] || nom;
+  document.querySelectorAll('.tabbar a').forEach((a) => a.classList.toggle('actif', a.dataset.tab === onglet));
+  window.scrollTo(0, 0);
+}
+
+function rafraichir() {
+  if (!vue) return;
+  if (vue.update) return vue.update();
+  const y = window.scrollY;
+  vue.render($('#view'));
+  window.scrollTo(0, y);
+}
+
+window.addEventListener('hashchange', route);
+
+const chargement = () => `<p class="vide">Chargement…</p>`;
+
+/* ======================================================
+   VUE APPEL
+   ====================================================== */
+function vueAppel() {
+  let recherche = '';
+  let el;
+
+  const secCourante = () => {
+    if (S.sectionSel && section(S.sectionSel)) return S.sectionSel;
+    const t = maintenant();
+    const s = S.sections.find((s) => s.debut <= t && t < s.fin) || S.sections.find((s) => t < s.debut) || S.sections[0];
+    return s?.id || null;
+  };
+
+  async function marquer(maj) {
+    const secId = secCourante();
+    const ref = doc(db, 'appels', appelId(S.date, secId));
+    const presences = {}, heures = {};
+    for (const [id, st] of Object.entries(maj)) {
+      presences[id] = st || deleteField();
+      heures[id] = st ? maintenant() : deleteField();
+    }
+    try {
+      await setDoc(ref, {
+        date: S.date, sectionId: secId, presences, heures,
+        par: arrayUnion(moi()?.nom || S.user.email), majLe: serverTimestamp(),
+      }, { merge: true });
+    } catch (e) { erreurDonnees(e); }
+  }
+
+  function render(root) {
+    el = root;
+    root.innerHTML = `
+      <section class="appel">
+        <div class="ligne-date">
+          <label for="dateAppel">Séance du</label>
+          <input type="date" id="dateAppel" value="${S.date}">
+          <span id="noteDate" class="note"></span>
+        </div>
+        <div class="puces" id="puces" role="tablist" aria-label="Sections"></div>
+        <div id="enteteSec"></div>
+        <div class="outils" id="outils">
+          <input type="search" id="q" placeholder="Rechercher un élève" autocomplete="off">
+          <button id="tousP" class="btn">Tous présents</button>
+        </div>
+        <p class="legende" id="legende">P présent · A absent · R en retard · E excusé. Toucher à nouveau pour annuler.</p>
+        <ul class="liste-appel" id="liste"></ul>
+        <details class="ajout" id="ajout"></details>
+        <div class="barre-bilan" id="barreBilan"></div>
+      </section>`;
+
+    $('#dateAppel', root).onchange = (ev) => { S.date = ev.target.value || todayISO(); update(); };
+    $('#q', root).oninput = (ev) => { recherche = ev.target.value; majListe(); };
+    $('#tousP', root).onclick = () => {
+      const ap = S.appels.get(appelId(S.date, secCourante()));
+      const maj = {};
+      listeAppel(S.date, secCourante()).forEach((e) => { if (!ap?.presences?.[e.id]) maj[e.id] = 'P'; });
+      if (!Object.keys(maj).length) return toast('Tous les élèves sont déjà pointés.');
+      marquer(maj);
+      toast(`${pl(Object.keys(maj).length, 'élève')} marqué${Object.keys(maj).length > 1 ? 's' : ''} présent${Object.keys(maj).length > 1 ? 's' : ''}`);
+    };
+    $('#puces', root).onclick = (ev) => {
+      const b = ev.target.closest('[data-sec]');
+      if (!b) return;
+      S.sectionSel = b.dataset.sec;
+      update();
+    };
+    $('#liste', root).onclick = (ev) => {
+      const b = ev.target.closest('button[data-st]');
+      if (!b) return;
+      const ap = S.appels.get(appelId(S.date, secCourante()));
+      const actuel = ap?.presences?.[b.dataset.id];
+      marquer({ [b.dataset.id]: actuel === b.dataset.st ? null : b.dataset.st });
+    };
+    update();
+  }
+
+  function majListe() {
+    const secId = secCourante();
+    const ap = S.appels.get(appelId(S.date, secId));
+    const q = recherche.trim().toLowerCase();
+    const liste = listeAppel(S.date, secId).filter((e) => !q || `${e.nom} ${e.prenom} ${e.classe}`.toLowerCase().includes(q));
+    const inscrits = new Set(membres(secId).map((e) => e.id));
+    $('#liste', el).innerHTML = liste.map((e) => {
+      const st = ap?.presences?.[e.id] || '';
+      const hre = st === 'R' ? ap?.heures?.[e.id] : '';
+      return `
+        <li class="eleve-appel ${st ? 'etat-' + st : ''}">
+          <a class="qui" href="#eleve/${encodeURIComponent(e.id)}">
+            ${avatar(e)}
+            <span class="noms"><span class="nom">${esc(e.nom)}</span> <span class="prenom">${esc(e.prenom)}</span></span>
+            <span class="meta">${esc(e.classe)} ${e.rentreSeul ? '' : puceDepart(e)}${inscrits.has(e.id) ? '' : ' <span class="dep ajoute">Ajouté</span>'}${hre ? ` <span class="hre">${h(hre)}</span>` : ''}</span>
+          </a>
+          <div class="marques" role="group" aria-label="Statut de ${esc(e.prenom)} ${esc(e.nom)}">
+            ${Object.entries(STATUTS).map(([k, v]) =>
+              `<button data-id="${esc(e.id)}" data-st="${k}" class="m m-${k}" aria-pressed="${st === k}" title="${v.label}" aria-label="${v.label}">${v.court}</button>`).join('')}
+          </div>
+        </li>`;
+    }).join('') || `<li class="vide">${q ? 'Aucun élève ne correspond.' : 'Aucun élève inscrit dans cette section.'}</li>`;
+  }
+
+  function update() {
+    if (!el) return;
+    if (!$('#puces', el)) { if (S.sections.length) render(el); return; }
+    if (!S.pret) { $('#liste', el).innerHTML = chargement(); return; }
+    if (!S.sections.length) {
+      el.innerHTML = `<section class="vide-etat"><h1>Aucune section</h1><p>Importez l'export HelloAsso pour créer les sections et la liste des élèves.</p><a class="btn primaire" href="#import">Importer les inscriptions</a></section>`;
+      return;
+    }
+    const secId = secCourante();
+    const s = section(secId);
+    $('#noteDate', el).textContent = estMercredi(S.date) ? '' : "Ce n'est pas un mercredi";
+    $('#puces', el).innerHTML = S.sections.map((x) => {
+      const c = compter(S.date, x.id);
+      return `<button role="tab" data-sec="${x.id}" aria-selected="${x.id === secId}" style="--c:${x.couleur}">
+        <span class="p-nom">${esc(x.nom)}</span><span class="p-h">${h(x.debut)}${c.total ? ` · ${c.P + c.R}/${c.total}` : ''}</span></button>`;
+    }).join('');
+    const ap = S.appels.get(appelId(S.date, secId));
+    const c = compter(S.date, secId);
+    const heureMaj = ap?.majLe?.toDate ? ap.majLe.toDate().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
+    $('#enteteSec', el).innerHTML = `
+      <header class="entete-sec" style="--c:${s.couleur}">
+        <div>
+          <h1>${esc(s.nom)}</h1>
+          <p>${h(s.debut)} – ${h(s.fin)}${s.detail ? ' · ' + esc(s.detail) : ''}</p>
+          ${ap ? `<p class="petit">Appel par ${esc((ap.par || []).join(', '))}${heureMaj ? ' · mis à jour à ' + heureMaj : ''}</p>` : ''}
+        </div>
+        <div class="score" aria-label="${c.P + c.R} présents sur ${c.total}"><b>${c.P + c.R}</b><span>/${c.total}</span></div>
+      </header>`;
+    majListe();
+
+    const dansListe = new Set(listeAppel(S.date, secId).map((e) => e.id));
+    const autres = elevesActifs().filter((e) => !dansListe.has(e.id)).sort(trier);
+    const ajout = $('#ajout', el);
+    const ouvert = ajout.open;
+    ajout.innerHTML = `
+      <summary>Ajouter un élève non inscrit sur cette section</summary>
+      <div class="ajout-corps">
+        <select id="selAjout"><option value="">Choisir un élève…</option>
+          ${autres.map((e) => `<option value="${esc(e.id)}">${esc(e.nom)} ${esc(e.prenom)} (${esc(e.classe)})</option>`).join('')}
+        </select>
+        <button class="btn" id="btnAjout">Ajouter présent</button>
+      </div>`;
+    ajout.open = ouvert;
+    $('#btnAjout', el).onclick = () => {
+      const id = $('#selAjout', el).value;
+      if (!id) return;
+      marquer({ [id]: 'P' });
+      toast('Élève ajouté à cet appel');
+    };
+
+    $('#barreBilan', el).innerHTML = `
+      <div class="compteurs">
+        <span class="k-P">${pl(c.P, 'présent')}</span><span class="k-A">${pl(c.A, 'absent')}</span>
+        ${c.R ? `<span class="k-R">${pl(c.R, 'retard')}</span>` : ''}${c.E ? `<span class="k-E">${pl(c.E, 'excusé')}</span>` : ''}
+        ${c.non ? `<span class="k-non">${c.non} non pointé${c.non > 1 ? 's' : ''}</span>` : ''}
+      </div>
+      <a class="btn primaire" href="#jour/${S.date}">Bilan du jour</a>`;
+  }
+
+  return { render, update };
+}
+
+/* ======================================================
+   VUE ÉLÈVES
+   ====================================================== */
+function vueEleves() {
+  let q = '', fSec = '', fClasse = '', el;
+
+  function render(root) {
+    el = root;
+    root.innerHTML = `
+      <section>
+        <h1 class="titre">Élèves</h1>
+        <div class="filtres">
+          <input type="search" id="q" placeholder="Nom, prénom, classe…" autocomplete="off">
+          <select id="fSec"><option value="">Toutes les sections</option></select>
+          <select id="fClasse"><option value="">Toutes les classes</option></select>
+        </div>
+        <p class="compte" id="compte"></p>
+        <ul class="liste-eleves" id="liste"></ul>
+      </section>`;
+    $('#q', root).oninput = (e) => { q = e.target.value; majListe(); };
+    $('#fSec', root).onchange = (e) => { fSec = e.target.value; majListe(); };
+    $('#fClasse', root).onchange = (e) => { fClasse = e.target.value; majListe(); };
+    update();
+  }
+
+  function majListe() {
+    const n = q.trim().toLowerCase();
+    const liste = elevesActifs().sort(trier).filter((e) =>
+      (!n || `${e.nom} ${e.prenom} ${e.classe}`.toLowerCase().includes(n)) &&
+      (!fSec || (e.sections || []).includes(fSec)) &&
+      (!fClasse || e.classe === fClasse));
+    $('#compte', el).textContent = `${liste.length} élève${liste.length > 1 ? 's' : ''}`;
+    $('#liste', el).innerHTML = liste.map((e) => {
+      const d = depart(e);
+      return `
+        <li><a class="carte-eleve" href="#eleve/${encodeURIComponent(e.id)}">
+          ${avatar(e)}
+          <span class="ce-txt">
+            <span class="noms"><span class="nom">${esc(e.nom)}</span> ${esc(e.prenom)}</span>
+            <span class="meta">${esc(e.classe)} · fin ${h(d.fin) || '—'} ${puceDepart(e)}${conflits(e).length ? ' <span class="dep alerte">Créneaux en conflit</span>' : ''}</span>
+            <span class="sec-pastilles">${sectionsDe(e).map((s) => `<span style="--c:${s.couleur}">${esc(s.nom)}</span>`).join('')}</span>
+          </span>
+        </a></li>`;
+    }).join('') || `<li class="vide">${S.eleves.size ? 'Aucun élève ne correspond.' : 'Aucun élève : importez le fichier HelloAsso.'}</li>`;
+  }
+
+  function update() {
+    if (!el) return;
+    if (!S.pret) { $('#liste', el).innerHTML = chargement(); return; }
+    const selSec = $('#fSec', el), selClasse = $('#fClasse', el);
+    selSec.innerHTML = `<option value="">Toutes les sections</option>` + S.sections.map((s) => `<option value="${s.id}">${esc(s.nom)}</option>`).join('');
+    selSec.value = fSec;
+    const classes = [...new Set(elevesActifs().map((e) => e.classe).filter(Boolean))].sort();
+    selClasse.innerHTML = `<option value="">Toutes les classes</option>` + classes.map((c) => `<option>${esc(c)}</option>`).join('');
+    selClasse.value = fClasse;
+    majListe();
+  }
+
+  return { render, update };
+}
+
+/* ======================================================
+   FICHE ÉLÈVE
+   ====================================================== */
+async function redimensionner(file, max, qualite, carre = false) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+    if (carre) { const c = Math.min(sw, sh); sx = (sw - c) / 2; sy = (sh - c) / 3; sw = sh = c; }
+    const k = Math.min(1, max / Math.max(sw, sh));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(sw * k);
+    canvas.height = Math.round(sh * k);
+    canvas.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/jpeg', qualite);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function vueFiche(id) {
+  let el, photo = null, photoChargee = false;
+
+  function render(root) {
+    el = root;
+    const e = S.eleves.get(id);
+    if (!S.pret) { root.innerHTML = chargement(); return; }
+    if (!e) { root.innerHTML = `<section class="vide-etat"><h1>Élève introuvable</h1><a class="btn" href="#eleves">Retour à la liste</a></section>`; return; }
+    if (!photoChargee) {
+      photoChargee = true;
+      if (e.photoAt) getDoc(doc(db, 'photos', id)).then((d) => { photo = d.data()?.data || null; majPhoto(); }).catch(() => {});
+    }
+    const d = depart(e);
+    const secs = sectionsDe(e);
+    const conf = conflits(e);
+    const historique = [...S.appels.values()]
+      .filter((a) => a.presences?.[id])
+      .sort((a, b) => b.date.localeCompare(a.date) || (section(a.sectionId)?.debut || '').localeCompare(section(b.sectionId)?.debut || ''));
+    const nb = { P: 0, A: 0, R: 0, E: 0 };
+    historique.forEach((a) => nb[a.presences[id]]++);
+    const total = historique.length;
+    const taux = total ? Math.round(((nb.P + nb.R) / total) * 100) : null;
+
+    root.innerHTML = `
+      <section class="fiche">
+        <a class="retour" href="#eleves">‹ Élèves</a>
+        <header class="fiche-tete">
+          <label class="photo" id="zonePhoto" aria-label="Prendre ou choisir une photo">
+            <span id="photoImg">${avatar(e, 'photo-img')}</span>
+            <input type="file" id="inPhoto" accept="image/*" hidden>
+            <span class="photo-action">${e.photoAt ? 'Changer' : 'Ajouter une photo'}</span>
+          </label>
+          <div>
+            <h1><span class="nom">${esc(e.nom)}</span><br>${esc(e.prenom)}</h1>
+            <p class="meta">${esc(e.classe)}${e.dateNaissance ? ` · ${age(e.dateNaissance)} ans (${new Date(e.dateNaissance + 'T12:00:00').toLocaleDateString('fr-FR')})` : ''}</p>
+            <p class="meta">Compétition : ${e.competition ? 'oui' : 'non'}</p>
+            ${e.photoAt ? `<button class="lien petit" id="suppPhoto">Supprimer la photo</button>` : ''}
+          </div>
+        </header>
+
+        <div class="bloc depart ${d.seul ? 'ok' : 'attention'}">
+          <h2>Départ du mercredi</h2>
+          <p class="gros">Fin à ${h(d.fin) || '—'} · ${d.seul ? 'rentre seul' : 'doit être récupéré par un adulte'}</p>
+          <p class="petit">${d.seul ? 'Autorisé à rejoindre son domicile seul depuis le gymnase, la gare ou un arrêt de bus vaucressonnais.' : "Pas d'autorisation de sortie seul : attendre un responsable."}</p>
+        </div>
+
+        <div class="bloc">
+          <h2>Sections</h2>
+          <ul class="creneaux">
+            ${secs.map((s) => `<li style="--c:${s.couleur}"><b>${h(s.debut)} – ${h(s.fin)}</b> ${esc(s.nom)}${s.detail ? `<span class="petit"> · ${esc(s.detail)}</span>` : ''}</li>`).join('') || '<li>Aucune section</li>'}
+          </ul>
+          ${conf.map(([a, b]) => `<p class="alerte-txt">Inscrit à deux sections sur le même créneau : ${esc(a.nom)} et ${esc(b.nom)}.</p>`).join('')}
+        </div>
+
+        <div class="bloc">
+          <h2>Contacter la famille</h2>
+          <ul class="contacts">
+            ${e.telPere ? `<li><span>Père</span><a href="${telHref(e.telPere)}" class="tel">${esc(e.telPere)}</a><a href="${smsHref(e.telPere)}" class="lien">SMS</a></li>` : ''}
+            ${e.telMere ? `<li><span>Mère</span><a href="${telHref(e.telMere)}" class="tel">${esc(e.telMere)}</a><a href="${smsHref(e.telMere)}" class="lien">SMS</a></li>` : ''}
+            ${e.emailParents ? `<li><span>Mail</span><a href="mailto:${esc(e.emailParents)}">${esc(e.emailParents)}</a></li>` : ''}
+            ${e.emailPayeur && e.emailPayeur !== e.emailParents ? `<li><span>Payeur</span><a href="mailto:${esc(e.emailPayeur)}">${esc(e.emailPayeur)}</a></li>` : ''}
+          </ul>
+          ${e.payeur ? `<p class="petit">Inscription payée par ${esc(e.payeur)}${e.dateInscription ? ' le ' + new Date(e.dateInscription).toLocaleDateString('fr-FR') : ''}.</p>` : ''}
+          ${e.commentaire ? `<p class="petit">Commentaire HelloAsso : ${esc(e.commentaire)}</p>` : ''}
+        </div>
+
+        <div class="bloc">
+          <h2><label for="notes">Notes (santé, allergies, remarques)</label></h2>
+          <textarea id="notes" rows="3" placeholder="Visible par les trois enseignants">${esc(e.notes || '')}</textarea>
+          <button class="btn" id="btnNotes">Enregistrer les notes</button>
+        </div>
+
+        <div class="bloc">
+          <h2>Présences</h2>
+          ${total ? `<p class="gros">${taux} % de présence <span class="petit">(${nb.P} présent, ${nb.R} retard, ${nb.A} absent, ${nb.E} excusé)</span></p>` : '<p class="petit">Aucun appel enregistré pour cet élève.</p>'}
+          <ul class="histo-eleve">
+            ${historique.map((a) => {
+              const s = section(a.sectionId);
+              const st = a.presences[id];
+              return `<li><span>${dateCourte(a.date)}</span><span style="--c:${s?.couleur || '#999'}" class="h-sec">${esc(s?.nom || a.sectionId)}</span><span class="st st-${st}">${STATUTS[st].label}</span></li>`;
+            }).join('')}
+          </ul>
+        </div>
+      </section>`;
+
+    majPhoto();
+    $('#inPhoto', root).onchange = envoyerPhoto;
+    $('#btnNotes', root).onclick = async () => {
+      try {
+        await setDoc(doc(db, 'eleves', id), { notes: $('#notes', root).value.trim() }, { merge: true });
+        toast('Notes enregistrées');
+      } catch (err) { erreurDonnees(err); }
+    };
+    const supp = $('#suppPhoto', root);
+    if (supp) supp.onclick = async () => {
+      if (!confirm('Supprimer la photo de cet élève ?')) return;
+      await deleteDoc(doc(db, 'photos', id));
+      await setDoc(doc(db, 'eleves', id), { photoThumb: deleteField(), photoAt: deleteField() }, { merge: true });
+      photo = null;
+      toast('Photo supprimée');
+    };
+  }
+
+  function majPhoto() {
+    const e = S.eleves.get(id);
+    const zone = el && $('#photoImg', el);
+    if (!zone || !e) return;
+    if (photo) zone.innerHTML = `<img class="photo-img" src="${photo}" alt="Photo de ${esc(e.prenom)}">`;
+  }
+
+  async function envoyerPhoto(ev) {
+    const file = ev.target.files?.[0];
+    if (!file) return;
+    toast('Traitement de la photo…');
+    try {
+      // Grande photo (fiche) dans une collection à part, vignette dans la fiche élève
+      const grande = await redimensionner(file, 900, 0.8);
+      const vignette = await redimensionner(file, 120, 0.75, true);
+      await setDoc(doc(db, 'photos', id), { data: grande, majLe: serverTimestamp(), par: moi()?.nom || '' });
+      await setDoc(doc(db, 'eleves', id), { photoThumb: vignette, photoAt: serverTimestamp() }, { merge: true });
+      photo = grande;
+      majPhoto();
+      toast('Photo enregistrée');
+    } catch (err) {
+      console.error(err);
+      toast("La photo n'a pas pu être enregistrée : " + err.message, 'err');
+    }
+  }
+
+  return {
+    render,
+    update() {
+      // Ne pas effacer une note en cours de saisie
+      if (el && document.activeElement?.id === 'notes') return;
+      const y = window.scrollY;
+      render(el);
+      window.scrollTo(0, y);
+    },
+  };
+}
+
+/* ======================================================
+   HISTORIQUE
+   ====================================================== */
+function datesAvecAppel() {
+  return [...new Set([...S.appels.values()].map((a) => a.date))].sort().reverse();
+}
+
+function vueHistorique() {
+  return {
+    render(root) {
+      if (!S.pret) { root.innerHTML = chargement(); return; }
+      const dates = datesAvecAppel();
+      root.innerHTML = `
+        <section>
+          <h1 class="titre">Historique</h1>
+          <div class="outils"><button class="btn" id="exportTout" ${dates.length ? '' : 'disabled'}>Exporter tout l'historique (CSV)</button></div>
+          <ul class="liste-jours">
+            ${dates.map((d) => {
+              const b = S.bilans.get(d);
+              return `<li><a href="#jour/${d}" class="jour">
+                <span class="j-date">${dateLongue(d)}</span>
+                <span class="j-secs">${S.sections.filter((s) => S.appels.has(appelId(d, s.id))).map((s) => {
+                  const c = compter(d, s.id);
+                  return `<span style="--c:${s.couleur}">${esc(s.nom)} <b>${c.P + c.R}/${c.total}</b>${c.A ? ` · ${c.A} abs.` : ''}</span>`;
+                }).join('')}</span>
+                ${b ? `<span class="petit envoye">Bilan envoyé au CPE par ${esc(b.par)}</span>` : ''}
+              </a></li>`;
+            }).join('') || `<li class="vide">Aucun appel enregistré pour l'instant.</li>`}
+          </ul>
+        </section>`;
+      $('#exportTout', root).onclick = () => telecharger(`presences-AS-${todayISO()}.csv`, csv(lignesCSV(dates)));
+    },
+  };
+}
+
+function lignesCSV(dates) {
+  const lignes = [['Date', 'Section', 'Horaire', 'Nom', 'Prénom', 'Classe', 'Statut', 'Heure pointage', 'Rentre seul']];
+  [...dates].sort().forEach((d) => S.sections.forEach((s) => {
+    const ap = S.appels.get(appelId(d, s.id));
+    if (!ap) return;
+    listeAppel(d, s.id).forEach((e) => {
+      const st = ap.presences?.[e.id];
+      lignes.push([d, s.nom, `${h(s.debut)}-${h(s.fin)}`, e.nom, e.prenom, e.classe, st ? STATUTS[st].label : 'Non pointé', ap.heures?.[e.id] || '', e.rentreSeul ? 'Oui' : 'Non']);
+    });
+  }));
+  return lignes;
+}
+
+function bilanTexte(date) {
+  const nomE = (e) => `${e.nom} ${e.prenom} (${e.classe})`;
+  const blocs = [];
+  let totP = 0, totA = 0;
+  S.sections.forEach((s) => {
+    const ap = S.appels.get(appelId(date, s.id));
+    if (!ap) return;
+    const liste = listeAppel(date, s.id);
+    const g = { P: [], A: [], R: [], E: [], non: [] };
+    liste.forEach((e) => (g[ap.presences?.[e.id]] || g.non).push(e));
+    totP += g.P.length + g.R.length;
+    totA += g.A.length;
+    let t = `■ ${s.nom} (${h(s.debut)} – ${h(s.fin)})\n`;
+    t += `Effectif présent : ${g.P.length + g.R.length} / ${liste.length}\n`;
+    if (g.A.length) t += `Absents (${g.A.length}) :\n${g.A.map((e) => '  - ' + nomE(e)).join('\n')}\n`;
+    if (g.R.length) t += `En retard (${g.R.length}) :\n${g.R.map((e) => `  - ${nomE(e)}, arrivé à ${h(ap.heures?.[e.id])}`).join('\n')}\n`;
+    if (g.E.length) t += `Excusés (${g.E.length}) :\n${g.E.map((e) => '  - ' + nomE(e)).join('\n')}\n`;
+    if (g.non.length) t += `Non pointés (${g.non.length}) :\n${g.non.map((e) => '  - ' + nomE(e)).join('\n')}\n`;
+    if (g.P.length) t += `Liste des présents : ${g.P.map(nomE).join(', ')}\n`;
+    t += `Appel réalisé par ${(ap.par || []).join(', ')}.\n`;
+    blocs.push(t);
+  });
+  return {
+    sujet: `AS – Présences du ${dateLongue(date)}`,
+    corps: `Bonjour,\n\nVoici le bilan des présences de l'${ETABLISSEMENT} pour le ${dateLongue(date)}.\n` +
+      `Total : ${pl(totP, 'présence')}, ${pl(totA, 'absence')}.\n\n${blocs.join('\n')}\nBonne journée,\n${moi()?.nom || ''}`,
+  };
+}
+
+function vueJour(date) {
+  return {
+    render(root) {
+      if (!S.pret) { root.innerHTML = chargement(); return; }
+      const secs = S.sections.filter((s) => S.appels.has(appelId(date, s.id)));
+      const b = S.bilans.get(date);
+      const { sujet, corps } = bilanTexte(date);
+      root.innerHTML = `
+        <section>
+          <a class="retour" href="#historique">‹ Historique</a>
+          <h1 class="titre">${dateLongue(date)}</h1>
+          ${secs.length ? '' : `<p class="vide">Aucun appel ce jour-là. <a href="#appel">Faire l'appel</a></p>`}
+          ${secs.map((s) => {
+            const ap = S.appels.get(appelId(date, s.id));
+            const liste = listeAppel(date, s.id);
+            return `
+              <div class="bloc jour-sec" style="--c:${s.couleur}">
+                <h2>${esc(s.nom)} <span class="petit">${h(s.debut)} – ${h(s.fin)}</span></h2>
+                <ul class="jour-liste">
+                  ${liste.map((e) => {
+                    const st = ap.presences?.[e.id];
+                    return `<li><a href="#eleve/${encodeURIComponent(e.id)}">${esc(e.nom)} ${esc(e.prenom)}</a><span class="petit">${esc(e.classe)}</span><span class="st st-${st || 'non'}">${st ? STATUTS[st].label : 'Non pointé'}${st === 'R' ? ' ' + h(ap.heures?.[e.id]) : ''}</span></li>`;
+                  }).join('')}
+                </ul>
+                <p class="petit">Appel par ${esc((ap.par || []).join(', '))}</p>
+              </div>`;
+          }).join('')}
+          ${secs.length ? `
+            <div class="bloc envoi">
+              <h2>Envoyer le bilan au CPE</h2>
+              <p class="petit">Destinataire : ${esc(EMAIL_CPE)}${b ? ` · déjà envoyé par ${esc(b.par)} le ${b.le?.toDate ? b.le.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : ''}` : ''}</p>
+              <div class="boutons">
+                <a class="btn primaire" id="envGmail" target="_blank" rel="noopener"
+                   href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CPE)}&su=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}">Ouvrir dans Gmail</a>
+                <a class="btn" id="envMail" href="mailto:${EMAIL_CPE}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}">Autre appli mail</a>
+                <button class="btn" id="copier">Copier le texte</button>
+                <button class="btn" id="csvJour">CSV du jour</button>
+              </div>
+              <details><summary>Aperçu du mail</summary><pre class="apercu">${esc(corps)}</pre></details>
+            </div>` : ''}
+        </section>`;
+      if (!secs.length) return;
+      const noterEnvoi = () => setDoc(doc(db, 'bilans', date), { par: moi()?.nom || S.user.email, le: serverTimestamp() }).catch(erreurDonnees);
+      $('#envGmail', root).onclick = noterEnvoi;
+      $('#envMail', root).onclick = noterEnvoi;
+      $('#copier', root).onclick = async () => {
+        try { await navigator.clipboard.writeText(`${sujet}\n\n${corps}`); toast('Bilan copié'); }
+        catch { toast('Copie impossible sur cet appareil', 'err'); }
+      };
+      $('#csvJour', root).onclick = () => telecharger(`presences-AS-${date}.csv`, csv(lignesCSV([date])));
+    },
+  };
+}
+
+/* ======================================================
+   IMPORT HELLOASSO
+   ====================================================== */
+const LIBELLES = {
+  nom: 'Nom', prenom: 'Prénom', classe: 'Classe', dateNaissance: 'Date de naissance', telPere: 'Tél. père', telMere: 'Tél. mère',
+  emailParents: 'Mail parents', emailPayeur: 'Mail payeur', payeur: 'Payeur', competition: 'Compétition', rentreSeul: 'Rentre seul',
+  sections: 'Sections', commentaire: 'Commentaire', refCommande: 'Commande',
+};
+
+function vueImport() {
+  let el, analyse = null;
+
+  function render(root) {
+    el = root;
+    root.innerHTML = `
+      <section class="import">
+        <h1 class="titre">Importer les inscriptions</h1>
+        <ol class="etapes">
+          <li>Sur HelloAsso, exportez les inscriptions de la campagne AS 2026-2027 <b>depuis le début de la saison</b> (pas seulement la dernière semaine).</li>
+          <li>Choisissez le fichier .xlsx ci-dessous : les nouveaux élèves sont ajoutés, les autres mis à jour. Les photos et notes sont conservées.</li>
+        </ol>
+        <label class="btn primaire grand fichier">Choisir le fichier HelloAsso
+          <input type="file" id="inFichier" accept=".xlsx,.xls,.csv" hidden>
+        </label>
+        <div id="apercu"></div>
+        <h2 class="sous-titre">Sections</h2>
+        <ul class="liste-sections" id="listeSections"></ul>
+        <p class="petit" id="dernierImport"></p>
+      </section>`;
+    $('#inFichier', root).onchange = lireFichier;
+    $('#listeSections', root).onclick = renommer;
+    update();
+  }
+
+  function update() {
+    if (!el) return;
+    $('#listeSections', el).innerHTML = S.sections.map((s) => `
+      <li style="--c:${s.couleur}"><span><b>${esc(s.nom)}</b> <span class="petit">${h(s.debut)} – ${h(s.fin)} · ${membres(s.id).length} élèves</span></span>
+      <button class="lien" data-ren="${s.id}">Renommer</button></li>`).join('') || '<li class="vide">Les sections seront créées au premier import.</li>';
+    const li = S.meta.dernierImport;
+    $('#dernierImport', el).textContent = li
+      ? `Dernier import : ${li.le?.toDate ? li.le.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : ''} par ${li.par} (${li.fichier}) : ${li.nouveaux} nouveaux, ${li.maj} mis à jour.`
+      : '';
+  }
+
+  async function renommer(ev) {
+    const b = ev.target.closest('[data-ren]');
+    if (!b) return;
+    const s = section(b.dataset.ren);
+    const nom = prompt('Nouveau nom de la section', s.nom);
+    if (nom && nom.trim()) await setDoc(doc(db, 'sections', s.id), { nom: nom.trim() }, { merge: true });
+  }
+
+  async function lireFichier(ev) {
+    const f = ev.target.files?.[0];
+    if (!f) return;
+    const zone = $('#apercu', el);
+    zone.innerHTML = '<p class="vide">Lecture du fichier…</p>';
+    try {
+      const XLSX = await import('https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs');
+      const wb = XLSX.read(await f.arrayBuffer());
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: null });
+      const res = parseRows(rows);
+      const idsFichier = new Set(res.eleves.map((e) => e.id));
+      const nouveaux = [], modifies = [];
+      res.eleves.forEach((e) => {
+        const ex = S.eleves.get(e.id);
+        if (!ex) return nouveaux.push(e);
+        const champs = Object.keys(LIBELLES).filter((k) => JSON.stringify(ex[k] ?? '') !== JSON.stringify(e[k] ?? ''));
+        if (champs.length || ex.actif === false) modifies.push({ e, champs });
+      });
+      const absents = elevesActifs().filter((e) => !idsFichier.has(e.id));
+      const nouvellesSections = res.sections.filter((s) => !section(s.id));
+      analyse = { res, nouveaux, modifies, absents, fichier: f.name };
+
+      zone.innerHTML = `
+        <div class="bloc apercu-import">
+          <h2>${esc(f.name)}</h2>
+          <p class="gros">${res.eleves.length} inscrits lus : ${nouveaux.length} nouveaux, ${modifies.length} à mettre à jour, ${res.eleves.length - nouveaux.length - modifies.length} inchangés.</p>
+          ${nouvellesSections.length ? `<p>Nouvelles sections : ${nouvellesSections.map((s) => `<b>${esc(s.nom)}</b> (${h(s.debut)} – ${h(s.fin)})`).join(', ')}</p>` : ''}
+          ${nouveaux.length ? `<details open><summary>Nouveaux élèves (${nouveaux.length})</summary><ul>${nouveaux.map((e) => `<li>${esc(e.nom)} ${esc(e.prenom)} · ${esc(e.classe)}</li>`).join('')}</ul></details>` : ''}
+          ${modifies.length ? `<details><summary>Mises à jour (${modifies.length})</summary><ul>${modifies.map(({ e, champs }) => `<li>${esc(e.nom)} ${esc(e.prenom)} : ${champs.map((c) => LIBELLES[c]).join(', ') || 'réactivé'}</li>`).join('')}</ul></details>` : ''}
+          ${res.ignores.length ? `<details><summary>Lignes ignorées (${res.ignores.length})</summary><ul>${res.ignores.map((i) => `<li>Ligne ${i.ligne} : ${esc(i.raison)}</li>`).join('')}</ul></details>` : ''}
+          ${absents.length ? `
+            <div class="absents">
+              <p>${absents.length} élève(s) de l'application ne figurent pas dans ce fichier : ${absents.map((e) => esc(`${e.nom} ${e.prenom}`)).join(', ')}.</p>
+              <label><input type="checkbox" id="desactiver"> Les retirer des listes d'appel (désinscrits). Leur historique est conservé.</label>
+            </div>` : ''}
+          <div class="boutons">
+            <button class="btn primaire" id="valider">Valider l'import</button>
+            <button class="btn" id="annuler">Annuler</button>
+          </div>
+        </div>`;
+      $('#valider', el).onclick = valider;
+      $('#annuler', el).onclick = () => { zone.innerHTML = ''; analyse = null; ev.target.value = ''; };
+    } catch (err) {
+      console.error(err);
+      zone.innerHTML = `<p class="alerte-txt">Import impossible : ${esc(err.message)}</p>`;
+    }
+    ev.target.value = '';
+  }
+
+  async function valider() {
+    const { res, nouveaux, modifies, absents, fichier } = analyse;
+    const desactiver = $('#desactiver', el)?.checked;
+    const ops = [];
+    const couleursPrises = new Set(S.sections.map((s) => s.couleur));
+    res.sections.forEach((s, i) => {
+      const ex = section(s.id);
+      const data = { nomOriginal: s.nom, debut: s.debut, fin: s.fin, detail: s.detail, colonne: s.colonne, ordre: i };
+      if (!ex) {
+        data.nom = s.nom;
+        data.couleur = PALETTE.find((c) => !couleursPrises.has(c)) || PALETTE[i % PALETTE.length];
+        couleursPrises.add(data.couleur);
+      }
+      ops.push([doc(db, 'sections', s.id), data]);
+    });
+    const aEcrire = [...nouveaux.map((e) => ({ e, neuf: true })), ...modifies.map(({ e }) => ({ e, neuf: false }))];
+    aEcrire.forEach(({ e, neuf }) => {
+      const { id, ...data } = e;
+      ops.push([doc(db, 'eleves', id), { ...data, actif: true, source: 'helloasso', majImport: serverTimestamp(), ...(neuf ? { creeLe: serverTimestamp() } : {}) }]);
+    });
+    if (desactiver) absents.forEach((e) => ops.push([doc(db, 'eleves', e.id), { actif: false }]));
+    ops.push([doc(db, 'config', 'meta'), {
+      dernierImport: { le: serverTimestamp(), par: moi()?.nom || S.user.email, fichier, nouveaux: nouveaux.length, maj: modifies.length },
+    }]);
+
+    const btn = $('#valider', el);
+    btn.disabled = true;
+    btn.textContent = 'Import en cours…';
+    try {
+      for (let i = 0; i < ops.length; i += 450) {
+        const batch = writeBatch(db);
+        ops.slice(i, i + 450).forEach(([ref, data]) => batch.set(ref, data, { merge: true }));
+        await batch.commit();
+      }
+      $('#apercu', el).innerHTML = `<p class="succes">Import terminé : ${nouveaux.length} nouveaux, ${modifies.length} mis à jour${desactiver ? `, ${absents.length} retirés des listes` : ''}.</p>`;
+      toast('Import terminé');
+    } catch (err) {
+      erreurDonnees(err);
+      btn.disabled = false;
+      btn.textContent = "Valider l'import";
+    }
+  }
+
+  return { render, update };
+}
+
+</script>
+</body>
+</html>

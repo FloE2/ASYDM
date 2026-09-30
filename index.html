@@ -262,6 +262,21 @@ textarea { resize: vertical; margin-bottom: 8px; }
 .succes { background: #E3F2E9; color: var(--P); font-weight: 700; padding: 12px; border-radius: var(--rayon); }
 .liste-sections li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--surface); border-left: 6px solid var(--c); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
 
+/* ---------- Modification de fiche ---------- */
+.barre-fiche { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.barre-fiche .retour { margin: 0; }
+.protege { background: #FFF8EA; border-radius: 8px; padding: 8px 12px; font-size: .88rem; margin: 0 0 12px; }
+.champ { display: block; margin-bottom: 10px; }
+.champ > span, .etiquette { display: block; font-size: .85rem; font-weight: 700; color: var(--gris); margin: 0 0 4px; }
+.champ input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1.5px solid var(--trait); border-radius: var(--rayon); background: var(--surface); }
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.coche { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.coche input { width: 22px; height: 22px; accent-color: var(--encre); }
+.etiquette { margin-top: 12px; }
+.puces-verrous { display: flex; flex-wrap: wrap; gap: 6px; }
+.verrou { border: 1.5px solid var(--trait); background: #FFF8EA; border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .88rem; }
+.collant { position: sticky; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 8px); background: var(--fond); padding: 8px 0; }
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 80px);
@@ -340,7 +355,7 @@ const EMAIL_CPE = 'jean-richard.deston@ac-versailles.fr';
 const ETABLISSEMENT = 'Association sportive du collège Yves du Manoir, Vaucresson';
 
 // ---------- Lecture de l'export HelloAsso ----------
-const { parseRows } = (() => {
+const { parseRows, formatNom, formatPrenom, formatPhone } = (() => {
 // Lecture de l'export HelloAsso (xlsx/csv) -> élèves + sections.
 // Module "pur" : aucune dépendance à Firebase, testable seul.
 
@@ -513,7 +528,7 @@ function parseRows(rows) {
   return { eleves: [...parId.values()], sections, ignores, colonnesManquantes };
 }
 
-return { parseRows };
+return { parseRows, formatNom, formatPrenom, formatPhone };
 })();
 
 /* ---------- Firebase ---------- */
@@ -732,7 +747,7 @@ function ecouter() {
 }
 
 /* ---------- Routeur ---------- */
-const ROUTES = { appel: vueAppel, eleves: vueEleves, eleve: vueFiche, historique: vueHistorique, jour: vueJour, import: vueImport };
+const ROUTES = { appel: vueAppel, eleves: vueEleves, eleve: vueFiche, historique: vueHistorique, jour: vueJour, import: vueImport, modifier: vueEdition };
 
 function route() {
   if (!autorise(S.user)) return;
@@ -740,7 +755,7 @@ function route() {
   const f = ROUTES[nom] || vueAppel;
   vue = f(decodeURIComponent(param || ''));
   vue.render($('#view'));
-  const onglet = { eleve: 'eleves', jour: 'historique' }[nom] || nom;
+  const onglet = { eleve: 'eleves', modifier: 'eleves', jour: 'historique' }[nom] || nom;
   document.querySelectorAll('.tabbar a').forEach((a) => a.classList.toggle('actif', a.dataset.tab === onglet));
   window.scrollTo(0, 0);
 }
@@ -1028,7 +1043,8 @@ function vueFiche(id) {
 
     root.innerHTML = `
       <section class="fiche">
-        <a class="retour" href="#eleves">‹ Élèves</a>
+        <div class="barre-fiche"><a class="retour" href="#eleves">‹ Élèves</a><a class="btn" href="#modifier/${encodeURIComponent(id)}">✏️ Modifier la fiche</a></div>
+        ${(e.verrous || []).length ? `<p class="protege">🔒 Corrigé à la main, protégé des imports HelloAsso : ${e.verrous.map((k) => LIBELLES[k] || k).join(', ')}.</p>` : ''}
         <header class="fiche-tete">
                        <div class="photo">
                <span id="photoImg">${avatar(e, 'photo-img')}</span>
@@ -1140,6 +1156,108 @@ function vueFiche(id) {
       if (el && document.activeElement?.id === 'notes') return;
       const y = window.scrollY;
       render(el);
+      window.scrollTo(0, y);
+    },
+  };
+}
+
+/* ======================================================
+   MODIFIER UNE FICHE (corrections protégées des imports)
+   ====================================================== */
+function vueEdition(id) {
+  return {
+    render(root) {
+      if (!S.pret) { root.innerHTML = chargement(); return; }
+      const e = S.eleves.get(id);
+      if (!e) { root.innerHTML = `<section class="vide-etat"><h1>Élève introuvable</h1><a class="btn" href="#eleves">Retour</a></section>`; return; }
+      const verrous = new Set(e.verrous || []);
+      const cad = (k) => (verrous.has(k) ? ' <span class="cadenas" title="Protégé des imports">🔒</span>' : '');
+      const champ = (k, type = 'text', extra = '') =>
+        `<label class="champ"><span>${LIBELLES[k]}${cad(k)}</span><input type="${type}" name="${k}" value="${esc(e[k] || '')}" ${extra}></label>`;
+      root.innerHTML = `
+        <section class="edition">
+          <a class="retour" href="#eleve/${encodeURIComponent(id)}">‹ Annuler</a>
+          <h1 class="titre">Modifier la fiche</h1>
+          <p class="petit">Chaque information modifiée ici est protégée (🔒) : les prochains imports HelloAsso ne l'écraseront pas.</p>
+          <form id="formEdit" novalidate>
+            <div class="bloc">
+              <h2>Élève</h2>
+              ${champ('nom', 'text', 'autocapitalize="characters"')}
+              ${champ('prenom')}
+              <div class="deux">${champ('classe', 'text', 'autocapitalize="characters"')}${champ('dateNaissance', 'date')}</div>
+            </div>
+            <div class="bloc">
+              <h2>Contacts</h2>
+              ${champ('telPere', 'tel', 'inputmode="tel"')}
+              ${champ('telMere', 'tel', 'inputmode="tel"')}
+              ${champ('emailParents', 'email', 'inputmode="email" autocapitalize="off"')}
+              ${champ('emailPayeur', 'email', 'inputmode="email" autocapitalize="off"')}
+            </div>
+            <div class="bloc">
+              <h2>Mercredi</h2>
+              <label class="coche"><input type="checkbox" name="rentreSeul" ${e.rentreSeul ? 'checked' : ''}> Autorisé à rentrer seul${cad('rentreSeul')}</label>
+              <label class="coche"><input type="checkbox" name="competition" ${e.competition ? 'checked' : ''}> Participe aux compétitions${cad('competition')}</label>
+              <p class="etiquette">Sections${cad('sections')}</p>
+              ${S.sections.map((s) => `<label class="coche" style="border-left:5px solid ${s.couleur};padding-left:8px"><input type="checkbox" name="sec" value="${s.id}" ${(e.sections || []).includes(s.id) ? 'checked' : ''}> ${esc(s.nom)} <span class="petit">${h(s.debut)} – ${h(s.fin)}</span></label>`).join('')}
+            </div>
+            ${verrous.size ? `
+            <div class="bloc">
+              <h2>Informations protégées</h2>
+              <p class="petit">Touchez une étiquette pour la déprotéger : au prochain import, la valeur HelloAsso sera reprise.</p>
+              <div class="puces-verrous">${[...verrous].map((k) => `<button type="button" class="verrou" data-k="${k}">🔒 ${LIBELLES[k] || k} ✕</button>`).join('')}</div>
+            </div>` : ''}
+            <div class="boutons collant"><button class="btn primaire grand" type="submit">Enregistrer</button><a class="btn grand" href="#eleve/${encodeURIComponent(id)}">Annuler</a></div>
+          </form>
+        </section>`;
+
+      root.querySelectorAll('.verrou').forEach((b) => b.onclick = async () => {
+        const reste = (e.verrous || []).filter((k) => k !== b.dataset.k);
+        try { await setDoc(doc(db, 'eleves', id), { verrous: reste }, { merge: true }); toast(`${LIBELLES[b.dataset.k]} n'est plus protégé`); }
+        catch (err) { erreurDonnees(err); }
+      });
+
+      $('#formEdit', root).onsubmit = async (ev) => {
+        ev.preventDefault();
+        const f = ev.target;
+        const val = (k) => f.elements[k].value.trim();
+        const nouveau = {
+          nom: formatNom(val('nom')),
+          prenom: formatPrenom(val('prenom')),
+          classe: val('classe').toUpperCase(),
+          dateNaissance: val('dateNaissance'),
+          telPere: formatPhone(val('telPere')),
+          telMere: formatPhone(val('telMere')),
+          emailParents: val('emailParents').toLowerCase(),
+          emailPayeur: val('emailPayeur').toLowerCase(),
+          rentreSeul: f.elements.rentreSeul.checked,
+          competition: f.elements.competition.checked,
+          sections: [...f.querySelectorAll('input[name=sec]:checked')].map((x) => x.value),
+        };
+        if (!nouveau.nom || !nouveau.prenom) return toast('Le nom et le prénom sont obligatoires', 'err');
+        const mail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        for (const k of ['emailParents', 'emailPayeur'])
+          if (nouveau[k] && !mail.test(nouveau[k])) return toast(`${LIBELLES[k]} : adresse invalide`, 'err');
+        const changes = Object.keys(nouveau).filter((k) => JSON.stringify(nouveau[k] ?? '') !== JSON.stringify(e[k] ?? ''));
+        if (!changes.length) { location.hash = '#eleve/' + encodeURIComponent(id); return; }
+        const maj = {};
+        changes.forEach((k) => (maj[k] = nouveau[k]));
+        try {
+          await setDoc(doc(db, 'eleves', id), {
+            ...maj,
+            verrous: arrayUnion(...changes),
+            modifLe: serverTimestamp(),
+            modifPar: moi()?.nom || S.user.email,
+          }, { merge: true });
+          toast('Fiche enregistrée');
+          location.hash = '#eleve/' + encodeURIComponent(id);
+        } catch (err) { erreurDonnees(err); }
+      };
+    },
+    update() {
+      // Ne pas effacer une saisie en cours : on ne redessine que si rien n'est en train d'être tapé
+      if (document.activeElement?.closest?.('#formEdit')) return;
+      const y = window.scrollY;
+      this.render($('#view'));
       window.scrollTo(0, y);
     },
   };
@@ -1340,11 +1458,14 @@ function vueImport() {
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: null });
       const res = parseRows(rows);
       const idsFichier = new Set(res.eleves.map((e) => e.id));
-      const nouveaux = [], modifies = [];
+      const nouveaux = [], modifies = [], proteges = [];
       res.eleves.forEach((e) => {
         const ex = S.eleves.get(e.id);
         if (!ex) return nouveaux.push(e);
-        const champs = Object.keys(LIBELLES).filter((k) => JSON.stringify(ex[k] ?? '') !== JSON.stringify(e[k] ?? ''));
+        const differents = Object.keys(LIBELLES).filter((k) => JSON.stringify(ex[k] ?? '') !== JSON.stringify(e[k] ?? ''));
+        const verrous = ex.verrous || [];
+        const champs = differents.filter((k) => !verrous.includes(k));
+        differents.filter((k) => verrous.includes(k)).forEach((k) => proteges.push(`${ex.nom} ${ex.prenom} : ${LIBELLES[k]}`));
         if (champs.length || ex.actif === false) modifies.push({ e, champs });
       });
       const absents = elevesActifs().filter((e) => !idsFichier.has(e.id));
@@ -1358,6 +1479,7 @@ function vueImport() {
           ${nouvellesSections.length ? `<p>Nouvelles sections : ${nouvellesSections.map((s) => `<b>${esc(s.nom)}</b> (${h(s.debut)} – ${h(s.fin)})`).join(', ')}</p>` : ''}
           ${nouveaux.length ? `<details open><summary>Nouveaux élèves (${nouveaux.length})</summary><ul>${nouveaux.map((e) => `<li>${esc(e.nom)} ${esc(e.prenom)} · ${esc(e.classe)}</li>`).join('')}</ul></details>` : ''}
           ${modifies.length ? `<details><summary>Mises à jour (${modifies.length})</summary><ul>${modifies.map(({ e, champs }) => `<li>${esc(e.nom)} ${esc(e.prenom)} : ${champs.map((c) => LIBELLES[c]).join(', ') || 'réactivé'}</li>`).join('')}</ul></details>` : ''}
+          ${proteges.length ? `<details><summary>Corrections manuelles conservées (${proteges.length})</summary><p class="petit">HelloAsso contient une autre valeur, mais la correction faite dans l'appli est gardée.</p><ul>${proteges.map((t) => `<li>🔒 ${esc(t)}</li>`).join('')}</ul></details>` : ''}
           ${res.ignores.length ? `<details><summary>Lignes ignorées (${res.ignores.length})</summary><ul>${res.ignores.map((i) => `<li>Ligne ${i.ligne} : ${esc(i.raison)}</li>`).join('')}</ul></details>` : ''}
           ${absents.length ? `
             <div class="absents">
@@ -1396,6 +1518,7 @@ function vueImport() {
     const aEcrire = [...nouveaux.map((e) => ({ e, neuf: true })), ...modifies.map(({ e }) => ({ e, neuf: false }))];
     aEcrire.forEach(({ e, neuf }) => {
       const { id, ...data } = e;
+      (S.eleves.get(id)?.verrous || []).forEach((k) => delete data[k]);
       ops.push([doc(db, 'eleves', id), { ...data, actif: true, source: 'helloasso', majImport: serverTimestamp(), ...(neuf ? { creeLe: serverTimestamp() } : {}) }]);
     });
     if (desactiver) absents.forEach((e) => ops.push([doc(db, 'eleves', e.id), { actif: false }]));

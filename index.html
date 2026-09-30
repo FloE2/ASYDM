@@ -1030,11 +1030,11 @@ function vueFiche(id) {
       <section class="fiche">
         <a class="retour" href="#eleves">‹ Élèves</a>
         <header class="fiche-tete">
-          <label class="photo" id="zonePhoto" aria-label="Prendre ou choisir une photo">
-            <span id="photoImg">${avatar(e, 'photo-img')}</span>
-            <input type="file" id="inPhoto" accept="image/*" hidden>
-            <span class="photo-action">${e.photoAt ? 'Changer' : 'Ajouter une photo'}</span>
-          </label>
+                       <div class="photo">
+               <span id="photoImg">${avatar(e, 'photo-img')}</span>
+               <label class="photo-action" style="background:var(--encre);color:#fff;border-radius:8px;padding:9px 4px;margin-top:6px">📷 Prendre une photo<input type="file" id="inPhotoCam" accept="image/*" capture="environment" hidden></label>
+               <label class="photo-action" style="padding:8px 0">🖼️ Galerie<input type="file" id="inPhoto" accept="image/*" hidden></label>
+             </div>
           <div>
             <h1><span class="nom">${esc(e.nom)}</span><br>${esc(e.prenom)}</h1>
             <p class="meta">${esc(e.classe)}${e.dateNaissance ? ` · ${age(e.dateNaissance)} ans (${new Date(e.dateNaissance + 'T12:00:00').toLocaleDateString('fr-FR')})` : ''}</p>

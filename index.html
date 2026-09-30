@@ -1090,6 +1090,7 @@ function vueFiche(id) {
 
     majPhoto();
     $('#inPhoto', root).onchange = envoyerPhoto;
+    $('#inPhotoCam', root).onchange = envoyerPhoto;
     $('#btnNotes', root).onclick = async () => {
       try {
         await setDoc(doc(db, 'eleves', id), { notes: $('#notes', root).value.trim() }, { merge: true });

@@ -115,6 +115,7 @@ textarea { resize: vertical; margin-bottom: 8px; }
 .ligne-date { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 12px; }
 .ligne-date label { font-weight: 700; }
 .ligne-date input { width: auto; }
+.ligne-date select { flex: 1; min-width: 0; width: auto; font-weight: 700; text-transform: none; }
 
 .puces { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 10px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; scrollbar-width: none; }
 .puces::-webkit-scrollbar { display: none; }
@@ -551,6 +552,23 @@ const h = (t) => (t ? t.replace(':', 'h') : '');
 const dateLongue = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 const dateCourte = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 const estMercredi = (iso) => new Date(iso + 'T12:00:00').getDay() === 3;
+const isoDe = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+// Mercredi du jour, sinon le dernier mercredi passé
+function mercrediParDefaut() {
+  const d = new Date();
+  d.setDate(d.getDate() - ((d.getDay() - 3 + 7) % 7));
+  return isoDe(d);
+}
+// Tous les mercredis depuis le 1er septembre de l'année scolaire jusqu'au prochain mercredi
+function mercredisSaison() {
+  const auj = new Date();
+  const debut = new Date(auj.getMonth() >= 7 ? auj.getFullYear() : auj.getFullYear() - 1, 8, 1, 12);
+  while (debut.getDay() !== 3) debut.setDate(debut.getDate() + 1);
+  const fin = new Date(auj.getFullYear(), auj.getMonth(), auj.getDate() + ((3 - auj.getDay() + 7) % 7 || 7), 12);
+  const liste = [];
+  for (const d = new Date(debut); d <= fin; d.setDate(d.getDate() + 7)) liste.push(isoDe(d));
+  return liste;
+}
 const telHref = (t) => 'tel:' + String(t).replace(/\s/g, '');
 const smsHref = (t) => 'sms:' + String(t).replace(/\s/g, '');
 function age(iso) {
@@ -592,7 +610,7 @@ const S = {
   bilans: new Map(),
   meta: {},
   pret: false,
-  date: todayISO(),
+  date: null, // fixé au premier affichage (mercrediParDefaut)
   sectionSel: null,
 };
 let desabonnements = [];
@@ -776,6 +794,7 @@ const chargement = () => `<p class="vide">Chargement…</p>`;
    VUE APPEL
    ====================================================== */
 function vueAppel() {
+  if (!S.date) S.date = mercrediParDefaut();
   let recherche = '';
   let el;
 
@@ -807,9 +826,8 @@ function vueAppel() {
     root.innerHTML = `
       <section class="appel">
         <div class="ligne-date">
-          <label for="dateAppel">Séance du</label>
-          <input type="date" id="dateAppel" value="${S.date}">
-          <span id="noteDate" class="note"></span>
+          <label for="dateAppel">Mercredi</label>
+          <select id="dateAppel"></select>
         </div>
         <div class="puces" id="puces" role="tablist" aria-label="Sections"></div>
         <div id="enteteSec"></div>
@@ -823,7 +841,7 @@ function vueAppel() {
         <div class="barre-bilan" id="barreBilan"></div>
       </section>`;
 
-    $('#dateAppel', root).onchange = (ev) => { S.date = ev.target.value || todayISO(); update(); };
+    $('#dateAppel', root).onchange = (ev) => { S.date = ev.target.value; update(); };
     $('#q', root).oninput = (ev) => { recherche = ev.target.value; majListe(); };
     $('#tousP', root).onclick = () => {
       const ap = S.appels.get(appelId(S.date, secCourante()));
@@ -883,7 +901,16 @@ function vueAppel() {
     }
     const secId = secCourante();
     const s = section(secId);
-    $('#noteDate', el).textContent = estMercredi(S.date) ? '' : "Ce n'est pas un mercredi";
+    // Liste des mercredis (+ les éventuels jours où un appel existe déjà)
+    const jours = new Set(mercredisSaison());
+    S.appels.forEach((a) => a.date && jours.add(a.date));
+    jours.add(S.date);
+    const auj = todayISO();
+    $('#dateAppel', el).innerHTML = [...jours].sort().reverse().map((d) => {
+      const fait = S.sections.some((x) => S.appels.has(appelId(d, x.id)));
+      const txt = new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', estMercredi(d) ? { day: 'numeric', month: 'long' } : { weekday: 'long', day: 'numeric', month: 'long' });
+      return `<option value="${d}" ${d === S.date ? 'selected' : ''}>${txt}${d === auj ? " (aujourd'hui)" : d > auj ? ' (à venir)' : ''}${fait ? ' ✓' : ''}</option>`;
+    }).join('');
     $('#puces', el).innerHTML = S.sections.map((x) => {
       const c = compter(S.date, x.id);
       return `<button role="tab" data-sec="${x.id}" aria-selected="${x.id === secId}" style="--c:${x.couleur}">

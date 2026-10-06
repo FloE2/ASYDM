@@ -278,6 +278,10 @@ textarea { resize: vertical; margin-bottom: 8px; }
 .verrou { border: 1.5px solid var(--trait); background: #FFF8EA; border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: .88rem; }
 .collant { position: sticky; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 8px); background: var(--fond); padding: 8px 0; }
 
+/* ---------- Suppression ---------- */
+.btn-danger { border-color: var(--A); color: var(--A); white-space: normal; }
+.zone-danger { border: 1.5px dashed var(--A); background: #FFF7F7; }
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--tab) + env(safe-area-inset-bottom, 0px) + 80px);
@@ -1392,6 +1396,10 @@ function vueJour(date) {
                   }).join('')}
                 </ul>
                 <p class="petit">Appel par ${esc((ap.par || []).join(', '))}</p>
+                <div class="boutons">
+                  <button class="btn" data-modif="${s.id}">✏️ Modifier cet appel</button>
+                  <button class="btn btn-danger" data-supp="${s.id}">🗑️ Supprimer</button>
+                </div>
               </div>`;
           }).join('')}
           ${secs.length ? `
@@ -1406,9 +1414,39 @@ function vueJour(date) {
                 <button class="btn" id="csvJour">CSV du jour</button>
               </div>
               <details><summary>Aperçu du mail</summary><pre class="apercu">${esc(corps)}</pre></details>
+            </div>
+            <div class="bloc zone-danger">
+              <h2>Supprimer la journée</h2>
+              <p class="petit">Efface tous les appels du ${dateLongue(date)} (${secs.length} section${secs.length > 1 ? 's' : ''}). Action définitive.</p>
+              <button class="btn btn-danger" id="suppJour">🗑️ Supprimer la journée</button>
             </div>` : ''}
         </section>`;
       if (!secs.length) return;
+      root.querySelectorAll('[data-modif]').forEach((b) => b.onclick = () => {
+        S.date = date;
+        S.sectionSel = b.dataset.modif;
+        location.hash = '#appel';
+      });
+      root.querySelectorAll('[data-supp]').forEach((b) => b.onclick = async () => {
+        const sec = section(b.dataset.supp);
+        if (!confirm(`Supprimer l'appel « ${sec.nom} » du ${dateLongue(date)} ?\nCette action est définitive.`)) return;
+        try {
+          await deleteDoc(doc(db, 'appels', appelId(date, sec.id)));
+          toast('Appel supprimé');
+          if (secs.length === 1) { await deleteDoc(doc(db, 'bilans', date)); location.hash = '#historique'; }
+        } catch (err) { erreurDonnees(err); }
+      });
+      $('#suppJour', root).onclick = async () => {
+        if (!confirm(`Supprimer TOUS les appels du ${dateLongue(date)} ?\nCette action est définitive.`)) return;
+        try {
+          const batch = writeBatch(db);
+          secs.forEach((x) => batch.delete(doc(db, 'appels', appelId(date, x.id))));
+          batch.delete(doc(db, 'bilans', date));
+          await batch.commit();
+          toast('Journée supprimée');
+          location.hash = '#historique';
+        } catch (err) { erreurDonnees(err); }
+      };
       const noterEnvoi = () => setDoc(doc(db, 'bilans', date), { par: moi()?.nom || S.user.email, le: serverTimestamp() }).catch(erreurDonnees);
       $('#envGmail', root).onclick = noterEnvoi;
       $('#envMail', root).onclick = noterEnvoi;

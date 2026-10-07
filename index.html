@@ -283,6 +283,9 @@ textarea { resize: vertical; margin-bottom: 8px; }
 
 /* ---------- Suppression ---------- */
 .btn-danger { border-color: var(--A); color: var(--A); white-space: normal; }
+.cible { margin: 0 0 8px 32px; display: grid; gap: 6px; }
+.cible select { width: 100%; }
+.barre-fiche .titre { margin: 0; }
 .zone-danger { border: 1.5px dashed var(--A); background: #FFF7F7; }
 
 /* ---------- Toast ---------- */
@@ -334,7 +337,7 @@ import {
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
   collection, doc, onSnapshot, setDoc, writeBatch, getDoc, deleteDoc,
-  serverTimestamp, deleteField, arrayUnion,
+  serverTimestamp, deleteField, arrayUnion, updateDoc,
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 
@@ -616,6 +619,7 @@ const S = {
   appels: new Map(),
   bilans: new Map(),
   meta: {},
+  corresp: {}, // inscriptions HelloAsso écartées ou rattachées à une autre fiche
   pret: false,
   date: null, // fixé au premier affichage (mercrediParDefaut)
   sectionSel: null,
@@ -775,11 +779,12 @@ function ecouter() {
       rafraichir();
     }, erreurDonnees),
     onSnapshot(doc(db, 'config', 'meta'), (d) => { S.meta = d.data() || {}; rafraichir(); }, erreurDonnees),
+    onSnapshot(doc(db, 'config', 'correspondances'), (d) => { S.corresp = d.data() || {}; rafraichir(); }, erreurDonnees),
   );
 }
 
 /* ---------- Routeur ---------- */
-const ROUTES = { appel: vueAppel, eleves: vueEleves, eleve: vueFiche, historique: vueHistorique, jour: vueJour, import: vueImport, modifier: vueEdition };
+const ROUTES = { appel: vueAppel, eleves: vueEleves, eleve: vueFiche, historique: vueHistorique, jour: vueJour, import: vueImport, modifier: vueEdition, supprimer: vueSuppression };
 
 function route() {
   if (!autorise(S.user)) return;
@@ -787,7 +792,7 @@ function route() {
   const f = ROUTES[nom] || vueAppel;
   vue = f(decodeURIComponent(param || ''));
   vue.render($('#view'));
-  const onglet = { eleve: 'eleves', modifier: 'eleves', jour: 'historique' }[nom] || nom;
+  const onglet = { eleve: 'eleves', modifier: 'eleves', supprimer: 'eleves', jour: 'historique' }[nom] || nom;
   document.querySelectorAll('.tabbar a').forEach((a) => a.classList.toggle('actif', a.dataset.tab === onglet));
   window.scrollTo(0, 0);
 }
@@ -990,7 +995,7 @@ function vueEleves() {
     el = root;
     root.innerHTML = `
       <section>
-        <h1 class="titre">Élèves</h1>
+        <div class="barre-fiche"><h1 class="titre">Élèves</h1><a class="btn" href="#modifier/nouveau">＋ Ajouter un élève</a></div>
         <div class="filtres">
           <input type="search" id="q" placeholder="Nom, prénom, classe…" autocomplete="off">
           <select id="fSec"><option value="">Toutes les sections</option></select>
@@ -1147,6 +1152,12 @@ function vueFiche(id) {
             }).join('')}
           </ul>
         </div>
+
+        <div class="bloc zone-danger">
+          <h2>Supprimer l'élève</h2>
+          <p class="petit">Pour une fiche en double, une erreur d'inscription ou un élève qui quitte l'AS.</p>
+          <a class="btn btn-danger" href="#supprimer/${encodeURIComponent(id)}">🗑️ Supprimer cet élève…</a>
+        </div>
       </section>`;
 
     majPhoto();
@@ -1207,23 +1218,101 @@ function vueFiche(id) {
 }
 
 /* ======================================================
+   SUPPRIMER UN ÉLÈVE
+   ====================================================== */
+function vueSuppression(id) {
+  let fait = false;
+  function render(root) {
+    if (!S.pret) { root.innerHTML = chargement(); return; }
+    const e = S.eleves.get(id);
+    if (!e) { if (!fait) root.innerHTML = `<section class="vide-etat"><h1>Élève introuvable</h1><a class="btn" href="#eleves">Retour à la liste</a></section>`; return; }
+    const helloasso = e.source !== 'manuel';
+    const autres = elevesActifs().filter((x) => x.id !== id).sort(trier);
+    const nbAppels = [...S.appels.values()].filter((a) => a.presences?.[id]).length;
+    root.innerHTML = `
+      <section class="edition">
+        <a class="retour" href="#eleve/${encodeURIComponent(id)}">‹ Annuler</a>
+        <h1 class="titre">Supprimer ${esc(e.prenom)} ${esc(e.nom)}</h1>
+        <div class="bloc">
+          <p>La fiche, la photo et les notes seront effacées.${nbAppels ? ` Cet élève apparaît dans ${nbAppels} appel${nbAppels > 1 ? 's' : ''}.` : ''}</p>
+          ${helloasso ? `
+          <p class="etiquette"><b>Cette inscription vient de HelloAsso.</b> Aux prochains imports :</p>
+          <label class="coche"><input type="radio" name="apres" value="rattacher"> La rattacher à la bonne fiche (inscription faite au mauvais nom)</label>
+          <div id="zoneCible" class="cible" hidden>
+            <select id="selCible"><option value="">Choisir l'élève concerné…</option>
+              ${autres.map((x) => `<option value="${esc(x.id)}">${esc(x.nom)} ${esc(x.prenom)}${x.classe ? ' (' + esc(x.classe) + ')' : ''}</option>`).join('')}
+            </select>
+            <p class="petit">Les informations HelloAsso (sections, classe, téléphones, mails, départ) mettront à jour cette fiche, sans toucher à son nom, prénom et date de naissance.${nbAppels ? ' Les pointages déjà faits lui sont transférés.' : ''}</p>
+          </div>
+          <label class="coche"><input type="radio" name="apres" value="ignorer" checked> Ne plus l'importer (doublon, désinscription…)</label>
+          <label class="coche"><input type="radio" name="apres" value="rien"> Rien de spécial : elle reviendra si elle est encore dans HelloAsso</label>` : ''}
+        </div>
+        <div class="boutons"><button class="btn btn-danger grand" id="confirmer">🗑️ Supprimer définitivement</button><a class="btn grand" href="#eleve/${encodeURIComponent(id)}">Annuler</a></div>
+      </section>`;
+    root.querySelectorAll('input[name=apres]').forEach((r) => r.onchange = () => {
+      $('#zoneCible', root).hidden = root.querySelector('input[name=apres]:checked').value !== 'rattacher';
+    });
+    $('#confirmer', root).onclick = () => supprimer(root, e, helloasso);
+  }
+
+  async function supprimer(root, e, helloasso) {
+    const apres = helloasso ? root.querySelector('input[name=apres]:checked').value : 'rien';
+    const cible = apres === 'rattacher' ? $('#selCible', root).value : '';
+    if (apres === 'rattacher' && !cible) return toast("Choisis l'élève à qui rattacher l'inscription", 'err');
+    const c = cible && S.eleves.get(cible);
+    if (!confirm(`Supprimer définitivement ${e.prenom} ${e.nom} ?${c ? `\n\nL'inscription HelloAsso sera rattachée à ${c.prenom} ${c.nom}.` : ''}`)) return;
+    const btn = $('#confirmer', root);
+    btn.disabled = true;
+    try {
+      // 1. Transférer les pointages vers la bonne fiche, ou les retirer
+      for (const a of S.appels.values()) {
+        if (!a.presences?.[id]) continue;
+        const maj = { [`presences.${id}`]: deleteField(), [`heures.${id}`]: deleteField() };
+        if (c && !a.presences[cible]) {
+          maj[`presences.${cible}`] = a.presences[id];
+          if (a.heures?.[id]) maj[`heures.${cible}`] = a.heures[id];
+        }
+        await updateDoc(doc(db, 'appels', a.id), maj);
+      }
+      // 2. Mémoriser le choix pour les prochains imports (y compris les renvois vers cette fiche)
+      const corr = {};
+      if (apres !== 'rien') corr[id] = { cible: c ? cible : null, nom: e.nom, prenom: e.prenom, le: serverTimestamp(), par: moi()?.nom || S.user.email };
+      Object.entries(S.corresp).forEach(([k, v]) => { if (v.cible === id) corr[k] = { ...v, cible: c ? cible : null }; });
+      if (Object.keys(corr).length) await setDoc(doc(db, 'config', 'correspondances'), corr, { merge: true });
+      // 3. Effacer la fiche et la photo
+      fait = true;
+      const batch = writeBatch(db);
+      batch.delete(doc(db, 'photos', id));
+      batch.delete(doc(db, 'eleves', id));
+      await batch.commit();
+      toast(`${e.prenom} ${e.nom} supprimé${c ? ', inscription rattachée à ' + c.prenom : ''}`);
+      location.hash = c ? '#eleve/' + encodeURIComponent(cible) : '#eleves';
+    } catch (err) { fait = false; btn.disabled = false; erreurDonnees(err); }
+  }
+
+  return { render, update() {} }; // pas de redessin pendant le choix
+}
+
+/* ======================================================
    MODIFIER UNE FICHE (corrections protégées des imports)
    ====================================================== */
 function vueEdition(id) {
   return {
     render(root) {
       if (!S.pret) { root.innerHTML = chargement(); return; }
-      const e = S.eleves.get(id);
+      const neuf = id === 'nouveau';
+      const e = neuf ? { sections: [] } : S.eleves.get(id);
       if (!e) { root.innerHTML = `<section class="vide-etat"><h1>Élève introuvable</h1><a class="btn" href="#eleves">Retour</a></section>`; return; }
+      const retour = neuf ? '#eleves' : '#eleve/' + encodeURIComponent(id);
       const verrous = new Set(e.verrous || []);
       const cad = (k) => (verrous.has(k) ? ' <span class="cadenas" title="Protégé des imports">🔒</span>' : '');
       const champ = (k, type = 'text', extra = '') =>
         `<label class="champ"><span>${LIBELLES[k]}${cad(k)}</span><input type="${type}" name="${k}" value="${esc(e[k] || '')}" ${extra}></label>`;
       root.innerHTML = `
         <section class="edition">
-          <a class="retour" href="#eleve/${encodeURIComponent(id)}">‹ Annuler</a>
-          <h1 class="titre">Modifier la fiche</h1>
-          <p class="petit">Chaque information modifiée ici est protégée (🔒) : les prochains imports HelloAsso ne l'écraseront pas.</p>
+          <a class="retour" href="${retour}">‹ Annuler</a>
+          <h1 class="titre">${neuf ? 'Nouvel élève' : 'Modifier la fiche'}</h1>
+          <p class="petit">${neuf ? "Fiche créée à la main : les imports HelloAsso ne la retireront pas des listes." : "Chaque information modifiée ici est protégée (🔒) : les prochains imports HelloAsso ne l'écraseront pas."}</p>
           <form id="formEdit" novalidate>
             <div class="bloc">
               <h2>Élève</h2>
@@ -1251,7 +1340,7 @@ function vueEdition(id) {
               <p class="petit">Touchez une étiquette pour la déprotéger : au prochain import, la valeur HelloAsso sera reprise.</p>
               <div class="puces-verrous">${[...verrous].map((k) => `<button type="button" class="verrou" data-k="${k}">🔒 ${LIBELLES[k] || k} ✕</button>`).join('')}</div>
             </div>` : ''}
-            <div class="boutons collant"><button class="btn primaire grand" type="submit">Enregistrer</button><a class="btn grand" href="#eleve/${encodeURIComponent(id)}">Annuler</a></div>
+            <div class="boutons collant"><button class="btn primaire grand" type="submit">Enregistrer</button><a class="btn grand" href="${retour}">Annuler</a></div>
           </form>
         </section>`;
 
@@ -1282,6 +1371,18 @@ function vueEdition(id) {
         const mail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         for (const k of ['emailParents', 'emailPayeur'])
           if (nouveau[k] && !mail.test(nouveau[k])) return toast(`${LIBELLES[k]} : adresse invalide`, 'err');
+        if (neuf) {
+          const nid = ['m', slug(nouveau.nom), slug(nouveau.prenom), (nouveau.dateNaissance || '').replace(/-/g, '')].filter(Boolean).join('-');
+          if (S.eleves.has(nid)) return toast('Cet élève existe déjà', 'err');
+          try {
+            await setDoc(doc(db, 'eleves', nid), {
+              ...nouveau, actif: true, source: 'manuel', creeLe: serverTimestamp(), modifPar: moi()?.nom || S.user.email,
+            });
+            toast('Élève ajouté');
+            location.hash = '#eleve/' + encodeURIComponent(nid);
+          } catch (err) { erreurDonnees(err); }
+          return;
+        }
         const changes = Object.keys(nouveau).filter((k) => JSON.stringify(nouveau[k] ?? '') !== JSON.stringify(e[k] ?? ''));
         if (!changes.length) { location.hash = '#eleve/' + encodeURIComponent(id); return; }
         const maj = {};
@@ -1501,9 +1602,16 @@ function vueImport() {
         <h2 class="sous-titre">Sections</h2>
         <ul class="liste-sections" id="listeSections"></ul>
         <p class="petit" id="dernierImport"></p>
+        <div id="corresp"></div>
       </section>`;
     $('#inFichier', root).onchange = lireFichier;
     $('#listeSections', root).onclick = renommer;
+    $('#corresp', root).onclick = async (ev) => {
+      const b = ev.target.closest('[data-annul]');
+      if (!b || !confirm("Annuler ce réglage ? L'inscription HelloAsso sera de nouveau importée normalement.")) return;
+      try { await setDoc(doc(db, 'config', 'correspondances'), { [b.dataset.annul]: deleteField() }, { merge: true }); toast('Réglage annulé'); }
+      catch (err) { erreurDonnees(err); }
+    };
     update();
   }
 
@@ -1516,6 +1624,14 @@ function vueImport() {
     $('#dernierImport', el).textContent = li
       ? `Dernier import : ${li.le?.toDate ? li.le.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : ''} par ${li.par} (${li.fichier}) : ${li.nouveaux} nouveaux, ${li.maj} mis à jour.`
       : '';
+    const corr = Object.entries(S.corresp);
+    $('#corresp', el).innerHTML = corr.length ? `
+      <h2 class="sous-titre">Inscriptions HelloAsso traitées à la main</h2>
+      <ul class="liste-sections">${corr.map(([k, v]) => {
+        const c = v.cible && S.eleves.get(v.cible);
+        return `<li><span><b>${esc(v.nom)} ${esc(v.prenom)}</b> <span class="petit">${c ? `rattachée à ${esc(c.nom)} ${esc(c.prenom)}` : 'jamais importée'}</span></span>
+          <button class="lien" data-annul="${esc(k)}">Annuler</button></li>`;
+      }).join('')}</ul>` : '';
   }
 
   async function renommer(ev) {
@@ -1536,6 +1652,17 @@ function vueImport() {
       const wb = XLSX.read(await f.arrayBuffer());
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: null });
       const res = parseRows(rows);
+      // Inscriptions écartées ou rattachées à la main (voir « Supprimer l'élève »)
+      const ecartees = [], rattachees = [];
+      const dejaLa = new Set(res.eleves.map((e) => e.id));
+      res.eleves = res.eleves.flatMap((e) => {
+        const c = S.corresp[e.id];
+        if (!c) return [e];
+        const cible = c.cible && S.eleves.get(c.cible);
+        if (!cible || dejaLa.has(cible.id)) { ecartees.push(`${e.nom} ${e.prenom}`); return []; }
+        rattachees.push(`${e.nom} ${e.prenom} → ${cible.nom} ${cible.prenom}`);
+        return [{ ...e, id: cible.id, nom: cible.nom, prenom: cible.prenom, dateNaissance: cible.dateNaissance || '' }];
+      });
       const idsFichier = new Set(res.eleves.map((e) => e.id));
       const nouveaux = [], modifies = [], proteges = [];
       res.eleves.forEach((e) => {
@@ -1547,7 +1674,7 @@ function vueImport() {
         differents.filter((k) => verrous.includes(k)).forEach((k) => proteges.push(`${ex.nom} ${ex.prenom} : ${LIBELLES[k]}`));
         if (champs.length || ex.actif === false) modifies.push({ e, champs });
       });
-      const absents = elevesActifs().filter((e) => !idsFichier.has(e.id));
+      const absents = elevesActifs().filter((e) => !idsFichier.has(e.id) && e.source !== 'manuel');
       const nouvellesSections = res.sections.filter((s) => !section(s.id));
       analyse = { res, nouveaux, modifies, absents, fichier: f.name };
 
@@ -1559,6 +1686,8 @@ function vueImport() {
           ${nouveaux.length ? `<details open><summary>Nouveaux élèves (${nouveaux.length})</summary><ul>${nouveaux.map((e) => `<li>${esc(e.nom)} ${esc(e.prenom)} · ${esc(e.classe)}</li>`).join('')}</ul></details>` : ''}
           ${modifies.length ? `<details><summary>Mises à jour (${modifies.length})</summary><ul>${modifies.map(({ e, champs }) => `<li>${esc(e.nom)} ${esc(e.prenom)} : ${champs.map((c) => LIBELLES[c]).join(', ') || 'réactivé'}</li>`).join('')}</ul></details>` : ''}
           ${proteges.length ? `<details><summary>Corrections manuelles conservées (${proteges.length})</summary><p class="petit">HelloAsso contient une autre valeur, mais la correction faite dans l'appli est gardée.</p><ul>${proteges.map((t) => `<li>🔒 ${esc(t)}</li>`).join('')}</ul></details>` : ''}
+          ${rattachees.length ? `<details><summary>Inscriptions rattachées à une autre fiche (${rattachees.length})</summary><ul>${rattachees.map((t) => `<li>🔗 ${esc(t)}</li>`).join('')}</ul></details>` : ''}
+          ${ecartees.length ? `<details><summary>Inscriptions écartées à la main (${ecartees.length})</summary><ul>${ecartees.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></details>` : ''}
           ${res.ignores.length ? `<details><summary>Lignes ignorées (${res.ignores.length})</summary><ul>${res.ignores.map((i) => `<li>Ligne ${i.ligne} : ${esc(i.raison)}</li>`).join('')}</ul></details>` : ''}
           ${absents.length ? `
             <div class="absents">
@@ -1598,7 +1727,7 @@ function vueImport() {
     aEcrire.forEach(({ e, neuf }) => {
       const { id, ...data } = e;
       (S.eleves.get(id)?.verrous || []).forEach((k) => delete data[k]);
-      ops.push([doc(db, 'eleves', id), { ...data, actif: true, source: 'helloasso', majImport: serverTimestamp(), ...(neuf ? { creeLe: serverTimestamp() } : {}) }]);
+      ops.push([doc(db, 'eleves', id), { ...data, actif: true, source: S.eleves.get(id)?.source === 'manuel' ? 'manuel' : 'helloasso', majImport: serverTimestamp(), ...(neuf ? { creeLe: serverTimestamp() } : {}) }]);
     });
     if (desactiver) absents.forEach((e) => ops.push([doc(db, 'eleves', e.id), { actif: false }]));
     ops.push([doc(db, 'config', 'meta'), {

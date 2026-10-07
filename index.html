@@ -75,6 +75,9 @@ main { max-width: 760px; margin: 0 auto; padding: 16px; }
 .sous-titre { font-size: 1.4rem; margin: 28px 0 10px; }
 .petit { font-size: .85rem; color: var(--gris); }
 .gros { font-size: 1.1rem; font-weight: 700; margin: 4px 0; }
+.titre-niveau { list-style: none; font-weight: 700; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); padding: 14px 4px 6px; border-bottom: 1px solid currentColor; margin-bottom: 6px; }
+.titre-niveau:first-child { padding-top: 4px; }
+.titre-niveau span { font-weight: 400; }
 .vide { color: var(--gris); padding: 24px 0; text-align: center; list-style: none; }
 .note { color: var(--R); font-size: .85rem; font-weight: 700; }
 
@@ -632,6 +635,13 @@ const PALETTE = ['#D7263D', '#1B6CA8', '#E0A100', '#2A9D5C', '#7B4BB7', '#E4572E
 const section = (id) => S.sections.find((s) => s.id === id);
 const elevesActifs = () => [...S.eleves.values()].filter((e) => e.actif !== false);
 const trier = (a, b) => a.nom.localeCompare(b.nom, 'fr') || a.prenom.localeCompare(b.prenom, 'fr');
+// Niveau d'une classe : 6, 5, 4 ou 3 (lit le premier chiffre : « 6A », « 5EME2 », « 4°B »…), sinon null
+const niveau = (classe) => { const m = String(classe || '').match(/[3-6]/); return m ? Number(m[0]) : null; };
+const rangNiveau = (classe) => { const n = niveau(classe); return n ? 6 - n : 9; }; // 6e → 0 … 3e → 3, inconnu à la fin
+const libNiveau = (classe) => { const n = niveau(classe); return n ? `${n}ème` : 'Classe non renseignée'; };
+const trierClasses = (a, b) => rangNiveau(a) - rangNiveau(b) || String(a).localeCompare(String(b), 'fr', { numeric: true });
+// Ordre des listes d'appel : 6ème, 5ème, 4ème, 3ème, puis classe, puis nom
+const trierParClasse = (a, b) => trierClasses(a.classe || '', b.classe || '') || trier(a, b);
 const membres = (secId) => elevesActifs().filter((e) => (e.sections || []).includes(secId)).sort(trier);
 const appelId = (date, secId) => `${date}_${secId}`;
 
@@ -639,7 +649,7 @@ function listeAppel(date, secId) {
   const ap = S.appels.get(appelId(date, secId));
   const ids = new Set(membres(secId).map((e) => e.id));
   Object.keys(ap?.presences || {}).forEach((id) => ids.add(id));
-  return [...ids].map((id) => S.eleves.get(id)).filter(Boolean).sort(trier);
+  return [...ids].map((id) => S.eleves.get(id)).filter(Boolean).sort(trierParClasse);
 }
 
 function sectionsDe(e) {
@@ -877,10 +887,14 @@ function vueAppel() {
     const q = recherche.trim().toLowerCase();
     const liste = listeAppel(S.date, secId).filter((e) => !q || `${e.nom} ${e.prenom} ${e.classe}`.toLowerCase().includes(q));
     const inscrits = new Set(membres(secId).map((e) => e.id));
+    let nivPrec;
     $('#liste', el).innerHTML = liste.map((e) => {
+      const niv = libNiveau(e.classe);
+      const titreNiv = niv !== nivPrec ? `<li class="titre-niveau">${niv} <span>· ${liste.filter((x) => libNiveau(x.classe) === niv).length}</span></li>` : '';
+      nivPrec = niv;
       const st = ap?.presences?.[e.id] || '';
       const hre = st === 'R' ? ap?.heures?.[e.id] : '';
-      return `
+      return `${titreNiv}
         <li class="eleve-appel ${st ? 'etat-' + st : ''}">
           <a class="qui" href="#eleve/${encodeURIComponent(e.id)}">
             ${avatar(e)}
@@ -1018,7 +1032,7 @@ function vueEleves() {
     const selSec = $('#fSec', el), selClasse = $('#fClasse', el);
     selSec.innerHTML = `<option value="">Toutes les sections</option>` + S.sections.map((s) => `<option value="${s.id}">${esc(s.nom)}</option>`).join('');
     selSec.value = fSec;
-    const classes = [...new Set(elevesActifs().map((e) => e.classe).filter(Boolean))].sort();
+    const classes = [...new Set(elevesActifs().map((e) => e.classe).filter(Boolean))].sort(trierClasses);
     selClasse.innerHTML = `<option value="">Toutes les classes</option>` + classes.map((c) => `<option>${esc(c)}</option>`).join('');
     selClasse.value = fClasse;
     majListe();
